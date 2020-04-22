@@ -36,10 +36,10 @@ export default class App extends Component {
             <Router>
                 <Switch>
                     <Route path="/info">
-                        <Info />
+                        <Info user={user} />
                     </Route>
                     <Route path="/menu">
-                        <Menu />
+                        <Menu user={user} />
                     </Route>
                     <Route path="/login">
                         <Login />

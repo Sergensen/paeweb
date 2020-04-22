@@ -8,6 +8,8 @@ export default class FormElement extends Component {
     }
 
     onKeyUp(e, type) {
+        if(e.key === "Enter") this.signInOrUp();
+
         this.setState({
             [type]: e.target.value
         })
