@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FormElement from "../components/login/FormElement";
+import LoginContainer from '../components/login/LoginContainer';
 import { Container, Row, Col, Nav, Tab } from 'react-bootstrap';
 import { googleProvider, auth } from '../Firebase';
 
@@ -53,11 +54,7 @@ export default class Login extends Component {
             const token = result.credential.accessToken;
             const user = result.user;
 
-            if(user) {
-                console.log(user)
-            } else {
-                alert("Bitte erneut versuchen!");
-            }
+            if(!user) alert("Bitte erneut versuchen!");
         } catch (error) {
             alert("Bitte erneut versuchen!");
         }
@@ -76,44 +73,20 @@ export default class Login extends Component {
         }
     }
 
+    setKey(key) {
+        this.setState({key});
+    }
+
     render() {
         const { key } = this.state;
         return (
-            <Tab.Container       
-                activeKey={key}
-                onSelect={(k) => this.setState({key: k})}>
-                <Row>
-                    <Col>
-                        <Nav variant="pills" className="flex-row">
-                            {
-                                Object.keys(data).map(key => (
-                                    <Nav.Item key={key}>
-                                        <Nav.Link eventKey={key}>{data[key].method}</Nav.Link>
-                                    </Nav.Item>
-                                ))
-                            }
-                        </Nav>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Tab.Content>
-                            {
-                                Object.keys(data).map(key => (
-                                    <Tab.Pane key={key} eventKey={key}>
-                                        <FormElement signInUpWithEmail={this.signInUpWithEmail.bind(this)} loginWithGoogle={this.loginWithGoogle.bind(this)} data={data[key]} />
-                                    </Tab.Pane>
-                                ))
-                            }
-                        </Tab.Content>
-                    </Col>
-                </Row>
-            </Tab.Container>
+            <LoginContainer 
+                tabKey={key} 
+                setKey={this.setKey.bind(this)}
+                data={data} 
+                signInUpWithEmail={this.signInUpWithEmail.bind(this)} 
+                loginWithGoogle={this.loginWithGoogle.bind(this)} 
+            />
         );
     }
-}
-
-const styles = {
-    container: {
-    },
 }
