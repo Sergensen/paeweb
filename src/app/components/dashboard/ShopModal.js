@@ -20,7 +20,7 @@ export default class ShopModal extends Component {
     }
 
     async createShop() {
-        const { createShop, toggleModal } = this.props;
+        const { createShop } = this.props;
         const { user } = this.state;
         createShop(user);
     }
@@ -29,7 +29,7 @@ export default class ShopModal extends Component {
         const { toggleModal, modal } = this.props;
         const { user } = this.state;
         return (
-            <Modal show={modal} onHide={() => toggleModal(false)}>  
+            <Modal show={modal} onHide={() => toggleModal("createShopModal", false)}>  
                 <Modal.Header closeButton>
                     <Modal.Title>Shop erstellen</Modal.Title>
                 </Modal.Header>

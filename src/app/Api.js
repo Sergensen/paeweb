@@ -1,21 +1,23 @@
 import { auth, firestore } from './Firebase';
 
-export default async function getShopsOfUser (uid) {
-    const shops = await firestore.collection("users").doc(uid).collection("shops").get();
+async function getShopsOfUser (uid) {
+    const snap = await firestore.collection("users").doc(uid).collection("shops").get();
+    let shops = [];
+    snap.forEach(doc => shops.push(doc.data()));
     return shops;
 }
 
-export default async function getOrders(shopId) {
+async function getOrders(shopId) {
     const orders = await firestore.collection("shops").doc(shopId).collection("orders").get();
     return orders;
 }
 
-export default async function getMenu (shopId) {
+async function getMenu (shopId) {
     const menu = await firestore.collection("shops").doc(shopId).collection("menu").get();
     return menu;
 }
 
-export default async function updateShop(shopId, name, description, backgroundColor) {
+async function updateShop(shopId, name, description, backgroundColor) {
     await firestore.collection("shops").doc(shopId).update({
         name, 
         description, 
@@ -23,7 +25,7 @@ export default async function updateShop(shopId, name, description, backgroundCo
     })
 }
 
-export default async function addShop(name, description, backgroundColor) {
+async function addShop(shopId, name, description, backgroundColor) {
     await firestore.collection("shops").doc(shopId).set({
         name, 
         description, 
@@ -31,16 +33,16 @@ export default async function addShop(name, description, backgroundColor) {
     })
 }
 
-export default async function getShop (shopId) {
+async function getShop (shopId) {
     const shop = await firestore.collection("shops").doc(shopId).get();
     return shop;
 }
 
-export default async function addShopToUser (shopId, uid, shopName) {
+async function addShopToUser (shopId, uid, shopName) {
     await firestore.collection("users").doc(uid).collection("shops").doc(shopId).set({shopName, shopId});
 }
 
-export default function createUniqueId() {
+function createUniqueId() {
     let dt = new Date().getTime();
     let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         let r = (dt + Math.random()*16)%16 | 0;
@@ -50,13 +52,30 @@ export default function createUniqueId() {
     return uuid;
 }
 
-export default function setLocalShop(shopId) {
+function setLocalShop(shopId) {
     localStorage.setItem("shopId", shopId);
 }
 
-export default function getLocalShop() {
+function resetShop() {
+    localStorage.setItem("shopId", "");
+}
+
+function getLocalShop() {
     const shopId = localStorage.getItem("shopId");
     return shopId;
 }
 
+export default {
+    getShopsOfUser,
+    getOrders,
+    getMenu, 
+    updateShop,
+    addShop,
+    addShopToUser, 
+    getShop, 
+    createUniqueId, 
+    setLocalShop, 
+    resetShop, 
+    getLocalShop
+}
           
