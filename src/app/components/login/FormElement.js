@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Form, Image } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
 export default class FormElement extends Component {
     state = {
@@ -52,10 +52,4 @@ export default class FormElement extends Component {
             </Container>
         );
     }
-}
-
-
-const styles = {
-    container: {
-    },
 }

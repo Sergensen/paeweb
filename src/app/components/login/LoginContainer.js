@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormElement from "./FormElement";
 import { Container, Row, Col, Nav, Tab } from 'react-bootstrap';
-import { googleProvider, auth } from '../../Firebase';
+import { auth } from '../../Firebase';
 
 export default class LoginContainer extends Component {
     render() {
@@ -39,9 +39,4 @@ export default class LoginContainer extends Component {
             </Tab.Container>
         );
     }
-}
-
-const styles = {
-    container: {
-    },
 }

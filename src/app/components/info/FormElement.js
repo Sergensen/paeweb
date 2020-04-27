@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Form, Image } from 'react-bootstrap';
+import { Container, Row, Button, Form } from 'react-bootstrap';
 import { SketchPicker } from 'react-color'
 
 export default class FormElement extends Component {
@@ -7,20 +7,20 @@ export default class FormElement extends Component {
     }
 
     onChange(e, type) {
-        let { user } = this.state;
-        user[type] = e.target.value;
-        this.setState({user})
+        let { shop } = this.state;
+        shop[type] = e.target.value;
+        this.setState({shop})
     }
 
     componentDidUpdate() {
-        if(!this.state.user) {
-            const { user } = this.props;
-            this.setState({user});
+        if(!this.state.shop) {
+            const { shop } = this.props;
+            this.setState({shop});
         }
     }
 
     save() {
-        const { name, description, backgroundColor } = this.state.user;
+        const { name, description, backgroundColor } = this.state.shop;
 
         if(name !== "" && description !== "" && backgroundColor !== "") {
             this.props.save(name, description, backgroundColor);
@@ -30,31 +30,31 @@ export default class FormElement extends Component {
     }
     
     handleChangeComplete(color) {
-        let { user } = this.state;
-        user.backgroundColor = color.hex;
-        this.setState({user})
+        let { shop } = this.state;
+        shop.backgroundColor = color.hex;
+        this.setState({shop})
     }
 
     render() {
-        const { user } = this.state;
+        const { shop } = this.state;
         return (
             <Container>
                 <Row>
                     <Form>
                         <Form.Group>
                             <Form.Label>Name</Form.Label>
-                            <Form.Control value={user && user.name || ""} onChange={(e) => this.onChange(e, "name")} type="text" placeholder="Name deines Lokals" />
+                            <Form.Control value={shop && shop.name || ""} onChange={(e) => this.onChange(e, "name")} type="text" placeholder="Name deines Lokals" />
                             <Form.Text>Gib hier den Namen deines Lokals ein. </Form.Text>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Beschreibung</Form.Label>
-                            <Form.Control value={user && user.description || ""} onChange={(e) => this.onChange(e, "description")} type="text" placeholder="Beschreibung deines Lokals" />
+                            <Form.Control value={shop && shop.description || ""} onChange={(e) => this.onChange(e, "description")} type="text" placeholder="Beschreibung deines Lokals" />
                             <Form.Text>Beschreibe dein Lokal mit einem aussagekräftigen Satz. </Form.Text>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Farbe</Form.Label>
                                 <SketchPicker
-                                    color={ user && user.backgroundColor || '#ffffff' }
+                                    color={ shop && shop.backgroundColor || '#ffffff' }
                                     onChangeComplete={(color) => this.handleChangeComplete(color) }
                                 />                            
                             <Form.Text>Wähle eine Farbe, die zu deinem Design gehört. </Form.Text>
@@ -67,10 +67,4 @@ export default class FormElement extends Component {
             </Container>
         );
     }
-}
-
-
-const styles = {
-    container: {
-    },
 }

@@ -1,39 +1,58 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { firestore } from '../Firebase';
+import { auth, firestore } from '../Firebase';
 import FormElement from '../components/info/FormElement';
 
 export default class Info extends Component {
     state = {
-        user: null,
-        existing: false
+        shop: false,
+        existing: false,
+        uid: false,
+        shopId: false
     }
 
-    async componentDidMount() {
-        const { user } = this.props;
-        if(user && user.uid) {
-            const userRef = firestore.collection("users").doc(user.uid);
-            try {
-                const document = await userRef.get();
-                if (document.exists) {
-                    const user = document.data();
-                    this.setState({
-                        user
-                    })
-                }
-            } catch (e) {
-                console.log("Error getting document:", e);
+    componentDidMount() {
+        const shopId = window.location.pathname.split('/')[1] || "";
+        this.setState({shopId});
+    }
+
+    componentDidUpdate() {
+        const { uid } = this.state;
+        if(!uid) {
+            const user = auth.currentUser;
+            if(user && user.uid) {
+                this.setState({uid: user.uid});
+                this.getShop();
+            } else {
+                //window.location.pathname =  "/login";
             }
         }
     }
 
+    async getShop () {
+        const { shopId } = this.state;
+        console.log(shopId);
+
+        if(shopId) {
+            const shopRef = firestore.collection("shops").doc(shopId);
+            const document = await shopRef.get();
+            if (document.exists) {
+                const shop = document.data();
+                this.setState({
+                    shop
+                })
+            }
+        } else {
+            //window.location.href = "/";
+        }
+    }
+
     save(name, description, backgroundColor) {
-        const { user } = this.props;
-        const { existing } = this.state;
-        if(user.uid) {
-            const userRef = firestore.collection("users").doc(user.uid);
-            userRef.set({
+        const { existing, uid, shopId } = this.state;
+        if(uid) {
+            const shopRef = firestore.collection("shops").doc(shopId);
+            shopRef.set({
                 name, 
                 description, 
                 backgroundColor
@@ -42,14 +61,14 @@ export default class Info extends Component {
     }
 
     render() {
-        const { user } = this.state;
+        const { shop, shopId } = this.state;
         return (
             <Container>
                 <Row>
-                    <Link to="/">Zurück</Link>
+                    <Link to={""}>Zurück</Link>
                 </Row>
                 <Row>
-                    <FormElement save={this.save.bind(this)} user={user} />
+                    {shop && <FormElement save={this.save.bind(this)} shop={shop} />}
                 </Row>
             </Container>
         );
