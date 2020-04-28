@@ -86,7 +86,7 @@ export default class Menu extends Component {
                     <Link to="/">Zurück</Link>
                 </Row>
                 {Object.keys(categories).length === 0 && (<Row>
-                    Deine Speisekarte ist noch Leer.
+                    Deine Speisekarte ist noch leer.
                 </Row>)}
                 <Row>
                     <Button onClick={() => this.toggleModal("categoryModal", true)}>Kategorie hinzufügen</Button>

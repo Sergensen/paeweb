@@ -166,9 +166,28 @@ async function updateCategory(shopId, categoryId, name, description) {
     })
 }
 
+async function addProduct(shopId, categoryId, name, description, price, extras) {
+    let promises = [];
+    promises.push(firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(name.toLowerCase()).set({
+        name, 
+        description,
+        price, 
+    }))
+
+    extras.forEach(extra => promises.push(
+        firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(name.toLowerCase()).collection("extras").doc(extra.name).set({
+            name: extra.name, 
+            price: extra.price, 
+        })
+    ))
+
+    await Promise.all(promises)
+}
+
 export default {
     updateCategory,
     getShopsOfUser,
+    addProduct,
     getCategory,
     getOpeningHours,
     getOrders,
