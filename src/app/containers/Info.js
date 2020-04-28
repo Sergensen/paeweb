@@ -3,60 +3,40 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { auth, firestore } from '../Firebase';
 import FormElement from '../components/info/FormElement';
+import API from '../Api';
 
 export default class Info extends Component {
     state = {
-        shop: false,
-        existing: false,
-        uid: false,
-        shopId: false
+        shopId: false,
+        shop: false
     }
 
     componentDidMount() {
-        const shopId = window.location.pathname.split('/')[1] || "";
-        this.setState({shopId});
-    }
-
-    componentDidUpdate() {
-        const { uid } = this.state;
-        if(!uid) {
-            const user = auth.currentUser;
-            if(user && user.uid) {
-                this.setState({uid: user.uid});
-                this.getShop();
-            } else {
-                //window.location.pathname =  "/login";
-            }
-        }
-    }
-
-    async getShop () {
-        const { shopId } = this.state;
-        console.log(shopId);
-
+        const shopId = API.getLocalShop();
         if(shopId) {
-            const shopRef = firestore.collection("shops").doc(shopId);
-            const document = await shopRef.get();
-            if (document.exists) {
-                const shop = document.data();
-                this.setState({
-                    shop
-                })
-            }
-        } else {
-            //window.location.href = "/";
+            this.setState({shopId})
         }
     }
 
-    save(name, description, backgroundColor) {
-        const { existing, uid, shopId } = this.state;
-        if(uid) {
-            const shopRef = firestore.collection("shops").doc(shopId);
-            shopRef.set({
-                name, 
-                description, 
-                backgroundColor
-            })
+    async componentDidUpdate() {
+        const { shopId, shop } = this.state;
+        const { user } = this.props;
+
+        if(user && user.uid && shopId && !shop) {
+            const fetchedShop = await API.getShop(shopId);
+            if(fetchedShop) {
+                this.setState({shop: fetchedShop});
+            } else {
+                window.location.href = "/";
+            }
+        }
+    }
+
+    async save(name, description, backgroundColor) {
+        const { shopId } = this.state;
+        if(shopId, name, description, backgroundColor) {
+            await API.updateShop(shopId, name, description, backgroundColor);
+            window.location.reload();
         }
     }
 
@@ -68,14 +48,10 @@ export default class Info extends Component {
                     <Link to={""}>Zurück</Link>
                 </Row>
                 <Row>
-                    {shop && <FormElement save={this.save.bind(this)} shop={shop} />}
+                    {shop && <FormElement shopId={shopId} save={this.save.bind(this)} shop={shop} />}
                 </Row>
             </Container>
         );
     }
 }
 
-const styles = {
-    container: {
-    },
-}

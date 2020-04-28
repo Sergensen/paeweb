@@ -57,7 +57,7 @@ export default class Dashboard extends Component {
         if(user && shop) {
             const { name, description, backgroundColor } = shop;
             const shopId = API.createUniqueId();
-            await API.addShopToUser(shopId, user.uid, name)
+            await API.addShopToUser(shopId, user.uid)
             await API.addShop(shopId, name, description, backgroundColor)
             this.setShop(shopId)
         }
@@ -67,7 +67,7 @@ export default class Dashboard extends Component {
         const { shops } = this.state;
         API.resetShop();
         this.setState({shopId: false});
-        if(!shops) await this.loadShops(); 
+        await this.loadShops(); 
     }
 
     render() {
@@ -92,14 +92,15 @@ export default class Dashboard extends Component {
                         </Row>
                         {(shops.length > 0) && <Row>
                             {
-                                shops.map(({shopName, shopId}) => (
+                                shops.map(({name, shopId}) => (
                                     <Col key={shopId}>
-                                        <Button variant="outline-primary" onClick={() => this.setShop(shopId)}>{shopName}</Button>
+                                        <Button variant="outline-primary" onClick={() => this.setShop(shopId)}>{name}</Button>
                                     </Col>
                                 ))
                             }
                         </Row>}
                         <Row>
+                            
                             <Button onClick={() => this.toggleModal("createShopModal" ,true)}>Neuen Shop erstellen</Button>
                             <ShopModal createShop={this.createShop.bind(this)} modal={createShopModal} toggleModal={this.toggleModal.bind(this)} />
                         </Row>

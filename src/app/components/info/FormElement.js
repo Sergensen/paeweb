@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Row, Button, Form } from 'react-bootstrap';
 import { SketchPicker } from 'react-color'
-
+import OpeningHoursModal from './OpeningHoursModal';
 export default class FormElement extends Component {
     state = {
+        openingHours: false,
     }
 
     onChange(e, type) {
@@ -12,11 +13,11 @@ export default class FormElement extends Component {
         this.setState({shop})
     }
 
-    componentDidUpdate() {
-        if(!this.state.shop) {
-            const { shop } = this.props;
-            this.setState({shop});
-        }
+    componentDidMount() {
+        const { shop } = this.props;
+        this.setState({
+            shop
+        });
     }
 
     save() {
@@ -35,8 +36,14 @@ export default class FormElement extends Component {
         this.setState({shop})
     }
 
+    toggleModal(type, value) {
+        this.setState({
+            [type]: value
+        })
+    }
+
     render() {
-        const { shop } = this.state;
+        const { shop, openingHours } = this.state;
         return (
             <Container>
                 <Row>
@@ -58,12 +65,14 @@ export default class FormElement extends Component {
                                     onChangeComplete={(color) => this.handleChangeComplete(color) }
                                 />                            
                             <Form.Text>Wähle eine Farbe, die zu deinem Design gehört. </Form.Text>
+                            <Button onClick={() => this.toggleModal("openingHours", true)}>Öffnungszeiten bearbeiten</Button>
                         </Form.Group>
                     </Form>
                 </Row>
                 <Row>
                     <Button onClick={() => this.save()}>Speichern</Button>
                 </Row>
+                <OpeningHoursModal {...this.props} openingHours={openingHours} toggleModal={this.toggleModal.bind(this)} />
             </Container>
         );
     }

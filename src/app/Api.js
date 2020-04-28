@@ -2,19 +2,35 @@ import { auth, firestore } from './Firebase';
 
 async function getShopsOfUser (uid) {
     const snap = await firestore.collection("users").doc(uid).collection("shops").get();
-    let shops = [];
-    snap.forEach(doc => shops.push(doc.data()));
+    let promises = [];
+
+    snap.forEach(async doc => {
+        const { shopId } = doc.data();
+        promises.push(getShop(shopId));
+    })
+    
+    const shops = await Promise.all(promises);
     return shops;
 }
 
 async function getOrders(shopId) {
-    const orders = await firestore.collection("shops").doc(shopId).collection("orders").get();
-    return orders;
+    const document = await firestore.collection("shops").doc(shopId).collection("orders").get();
+    if(document.exists) {
+        const orders = document.data();
+        return orders;
+    } else {
+        return null;
+    }
 }
 
 async function getMenu (shopId) {
-    const menu = await firestore.collection("shops").doc(shopId).collection("menu").get();
-    return menu;
+    const document = await firestore.collection("shops").doc(shopId).collection("menu").get();
+    if(document.exists) {
+        const menu = document.data();
+        return menu;
+    } else {
+        return null;
+    }
 }
 
 async function updateShop(shopId, name, description, backgroundColor) {
@@ -29,17 +45,23 @@ async function addShop(shopId, name, description, backgroundColor) {
     await firestore.collection("shops").doc(shopId).set({
         name, 
         description, 
+        shopId,
         backgroundColor
     })
 }
 
 async function getShop (shopId) {
-    const shop = await firestore.collection("shops").doc(shopId).get();
-    return shop;
+    const document = await firestore.collection("shops").doc(shopId).get();
+    if(document.exists) {
+        const shop = document.data();
+        return shop;
+    } else {
+        return null;
+    }
 }
 
-async function addShopToUser (shopId, uid, shopName) {
-    await firestore.collection("users").doc(uid).collection("shops").doc(shopId).set({shopName, shopId});
+async function addShopToUser (shopId, uid) {
+    await firestore.collection("users").doc(uid).collection("shops").doc(shopId).set({shopId});
 }
 
 function createUniqueId() {
@@ -65,11 +87,42 @@ function getLocalShop() {
     return shopId;
 }
 
+async function getOpeningHours(shopId) {
+    const snap = await firestore.collection("shops").doc(shopId).collection("openingHours").get();
+    let openingHours = {}
+
+    snap.forEach(async doc => {
+        const day = doc.data();
+        openingHours[doc.id] = day;
+    })
+
+    return openingHours;
+}
+
+async function saveOpeningHours(shopId, openingHours) {
+    let promises = [];
+
+    for (let key in openingHours) {
+        promises.push(
+            firestore
+                .collection("shops")
+                .doc(shopId)
+                .collection("openingHours")
+                .doc(key)
+                .set(openingHours[key])
+        )
+    }
+
+    await Promise.all(promises);
+}
+
 export default {
     getShopsOfUser,
+    getOpeningHours,
     getOrders,
     getMenu, 
     updateShop,
+    saveOpeningHours,
     addShop,
     addShopToUser, 
     getShop, 
