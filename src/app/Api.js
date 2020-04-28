@@ -23,16 +23,6 @@ async function getOrders(shopId) {
     }
 }
 
-async function getMenu (shopId) {
-    const document = await firestore.collection("shops").doc(shopId).collection("menu").get();
-    if(document.exists) {
-        const menu = document.data();
-        return menu;
-    } else {
-        return null;
-    }
-}
-
 async function updateShop(shopId, name, description, backgroundColor) {
     await firestore.collection("shops").doc(shopId).update({
         name, 
@@ -87,6 +77,21 @@ function getLocalShop() {
     return shopId;
 }
 
+
+function setLocalCategory(categoryId) {
+    localStorage.setItem("categoryId", categoryId);
+}
+
+function resetCategory() {
+    localStorage.setItem("categoryId", "");
+}
+
+function getLocalCategory() {
+    const categoryId = localStorage.getItem("categoryId");
+    return categoryId;
+}
+
+
 async function getOpeningHours(shopId) {
     const snap = await firestore.collection("shops").doc(shopId).collection("openingHours").get();
     let openingHours = {}
@@ -97,6 +102,18 @@ async function getOpeningHours(shopId) {
     })
 
     return openingHours;
+}
+
+async function getMenu(shopId) {
+    const snap = await firestore.collection("shops").doc(shopId).collection("menu").get();
+    let categories = {}
+
+    snap.forEach(async doc => {
+        const category = doc.data();
+        categories[doc.id] = category;
+    })
+
+    return categories;
 }
 
 async function saveOpeningHours(shopId, openingHours) {
@@ -115,9 +132,44 @@ async function saveOpeningHours(shopId, openingHours) {
 
     await Promise.all(promises);
 }
+ 
+async function addCategory(shopId, name, description) {
+    const key = name.toLowerCase();
+    await firestore.collection("shops").doc(shopId).collection("menu").doc(key).set({
+        name, 
+        description, 
+        products: 0
+    })
+}
+
+async function getCategory(shopId, categoryId) {
+    const doc = await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).get();
+    let category = {
+        data: doc.data()
+    }
+
+    const snap = await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").get();
+    let products = {}
+    snap.forEach(async doc => {
+        const product = doc.data();
+        products[doc.id] = product;
+    })
+    category.products = products;
+
+    return category;
+}
+
+async function updateCategory(shopId, categoryId, name, description) {
+    await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).update({
+        name, 
+        description, 
+    })
+}
 
 export default {
+    updateCategory,
     getShopsOfUser,
+    getCategory,
     getOpeningHours,
     getOrders,
     getMenu, 
@@ -129,6 +181,10 @@ export default {
     createUniqueId, 
     setLocalShop, 
     resetShop, 
-    getLocalShop
+    getLocalShop,
+    setLocalCategory,
+    resetCategory,
+    getLocalCategory,
+    addCategory
 }
           

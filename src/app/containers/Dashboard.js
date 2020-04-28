@@ -47,6 +47,14 @@ export default class Dashboard extends Component {
             createShopModal: false
         });
     }
+    
+    async resetShop() {
+        const { shops } = this.state;
+        API.resetShop();
+        this.setState({shopId: false});
+        await this.loadShops(); 
+    }
+
 
     toggleModal(type, value) {
         this.setState({[type]: value})
@@ -61,13 +69,6 @@ export default class Dashboard extends Component {
             await API.addShop(shopId, name, description, backgroundColor)
             this.setShop(shopId)
         }
-    }
-
-    async resetShop() {
-        const { shops } = this.state;
-        API.resetShop();
-        this.setState({shopId: false});
-        await this.loadShops(); 
     }
 
     render() {
