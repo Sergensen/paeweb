@@ -18,7 +18,8 @@ export default class ProductModal extends Component {
         await API.addProduct(shopId, categoryId, name, description, price, extras);
         window.location.reload()
     }
-
+    
+    //todo
     componentDidUpdate() {
         const { create, product } = this.props;
         if(!create && product) {
