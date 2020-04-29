@@ -174,17 +174,72 @@ async function addProduct(shopId, categoryId, name, description, price, extras) 
         price, 
     }))
 
+    promises.push(addExtrasToProduct(shopId, categoryId, name.toLowerCase(), extras));
+
+    await Promise.all(promises)
+}
+
+async function getExtrasOfCategory(shopId, categoryId) {
+    const snap = firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("extras").get();
+    let extras = {}
+
+    snap.forEach(async doc => {
+        const extra = doc.data();
+        extras.push(extra)
+    })
+
+    return extras;
+}
+
+async function getExtrasOfProduct(shopId, categoryId, productId) {
+    const snap = firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(productId).collection("extras").get();
+    let extras = []
+
+    snap.forEach(async doc => {
+        const extra = doc.data();
+        extras.push(extra)
+    })
+
+    return extras;
+}
+
+async function addExtrasToProduct(shopId, categoryId, productId, extras) {
+    let promises = [mapExtrasToCategory(shopId, categoryId, extras)];
+    
     extras.forEach(extra => promises.push(
-        firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(name.toLowerCase()).collection("extras").doc(extra.name).set({
+        firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(productId).collection("extras").doc(extra.name.toLowerCase()).set({
             name: extra.name, 
             price: extra.price, 
         })
     ))
 
-    await Promise.all(promises)
+    await Promise.all(promises);
 }
 
+async function mapExtrasToCategory(shopId, categoryId, extras) {
+    let promises = [];
+    extras.forEach(extra => promises.push(
+        firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("extras").doc(extra.name.toLowerCase()).set({
+            name: extra.name, 
+            price: extra.price, 
+        })
+    ))
+
+    await Promise.all(promises);
+}
+
+function deleteProduct(shopId, categoryId, productId) {
+    //Todo
+    return new Promise((resolve, reject) => {
+        resolve();
+    })
+}
+
+
 export default {
+    getExtrasOfCategory,
+    getExtrasOfProduct,
+    deleteProduct,
     updateCategory,
     getShopsOfUser,
     addProduct,

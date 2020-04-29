@@ -19,6 +19,18 @@ export default class ProductModal extends Component {
         window.location.reload()
     }
 
+    componentDidUpdate() {
+        const { create, product } = this.props;
+        if(!create && product) {
+            const { name, description, price } = product;
+            if(name && !this.state.name) {
+                this.setState({
+                    name, description, price
+                })
+            }
+        }
+    }
+
     changeExtra(i, type, value) {
         const { extras } = this.state;
         extras[i][type] = value;
@@ -41,7 +53,7 @@ export default class ProductModal extends Component {
     }
 
     render() {
-        const { toggleModal, modal, create } = this.props;
+        const { toggleModal, modal, create, product } = this.props;
         const { name, description, price, extras } = this.state;
         return (
             <Modal show={modal} onHide={() => toggleModal()}>  

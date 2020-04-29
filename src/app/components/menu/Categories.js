@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import ProductList from './ProductList';
 import ProductModal from './ProductModal';
+import API from '../../Api';
 
 export default class Categories extends Component {
     state = {
@@ -43,6 +44,12 @@ export default class Categories extends Component {
         }))
     }
 
+    async deleteProduct(shopId, categoryId, productId) {
+        const { products } = this.state;
+        delete products(productId);
+        await API.deleteProduct(shopId, categoryId, productId)
+    }
+
     render() {
         const { resetCategory } = this.props;
         const { name, description, disabled, products, productModal, create } = this.state;
@@ -75,7 +82,7 @@ export default class Categories extends Component {
                         Object.keys(products).length === 0 ? (
                             "Diese Kategorie ist noch leer."
                         ) : (
-                            <ProductList products={products} />
+                            <ProductList deleteProduct={this.deleteProduct.bind(this)} products={products} />
                         )
                     }
                 </Row>)}
