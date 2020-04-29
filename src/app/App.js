@@ -10,6 +10,7 @@ import Info from './containers/Info';
 import Login from './containers/Login';
 import Menu from './containers/Menu';
 import Orders from './containers/Orders';
+import API from './Api';
 
 export default class App extends Component {
     state = { 
@@ -24,6 +25,8 @@ export default class App extends Component {
                 }
                 this.setState({user})
             } else if(window.location.href.split("/")[3] !== "login") {
+                API.resetShop();
+                API.resetCategory();
                 window.location.pathname =  "/login";
             }
         });

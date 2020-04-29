@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import ProductList from './ProductList';
 import ProductModal from './ProductModal';
 
-export default class ShopNavigator extends Component {
+export default class Categories extends Component {
     state = {
         name: "",
         description: "",
@@ -45,7 +46,6 @@ export default class ShopNavigator extends Component {
     render() {
         const { resetCategory } = this.props;
         const { name, description, disabled, products, productModal, create } = this.state;
-        console.log(products)
         return (
             <Container>
                 <Row>
@@ -67,13 +67,18 @@ export default class ShopNavigator extends Component {
                     </Form>
                 </Row>
                 <br />
-
-                {products && Object.keys(products).length === 0 && (<Row>
-                    Diese Kategorie ist noch leer.
-                </Row>)}
                 <Row>
                     <Button onClick={() => this.setState({ productModal: true, create: true})}>Produkt hinzufügen</Button>
                 </Row>
+                {products && (<Row>
+                    {
+                        Object.keys(products).length === 0 ? (
+                            "Diese Kategorie ist noch leer."
+                        ) : (
+                            <ProductList products={products} />
+                        )
+                    }
+                </Row>)}
                 <ProductModal create={create} toggleModal={this.toggleModal.bind(this)} modal={productModal} />
             </Container>
         );

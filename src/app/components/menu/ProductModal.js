@@ -71,11 +71,14 @@ export default class ProductModal extends Component {
                         </Row>
                         <Row>
                             <Col>
-                                Extras 
+                                Extras hinzufügen
                             </Col>
                             <Col>
                                 <Button onClick={() => this.addExtra()} variant="primary" size="sm">
-                                    Extra Hinzufügen
+                                    Neue
+                                </Button> {' '}
+                                <Button onClick={() => this.addExtra()} variant="primary" size="sm">
+                                    Bestehende
                                 </Button>
                             </Col>
                         </Row>
@@ -92,7 +95,7 @@ export default class ProductModal extends Component {
                         {extras.length>0 && extras.map((extra, i) => (
                             <Row key={i}>
                                 <Col>
-                                    <Form.Control value={extra.name || ""} onChange={(e) => this.changeExtra(i, "name", e.target.value)} type="text" placeholder="Extra Käse" />
+                                    <Form.Control value={extra.name || ""} onChange={(e) => this.changeExtra(i, "name", e.target.value)} type="text" placeholder="Käse" />
                                 </Col>
                                 <Col>
                                     <Form.Control value={extra.price || ""} onChange={(e) => this.changeExtra(i, "price", e.target.value)} type="text" placeholder="0,50" />

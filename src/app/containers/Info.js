@@ -27,8 +27,10 @@ export default class Info extends Component {
             if(fetchedShop) {
                 this.setState({shop: fetchedShop});
             } else {
-                window.location.href = "/";
+                document.location = "/";
             }
+        } else if(user && user.uid && !shopId ) {
+            document.location = "/";
         }
     }
 

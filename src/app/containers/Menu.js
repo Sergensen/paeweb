@@ -3,17 +3,16 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import API from '../Api';
 import CategoryModal from '../components/menu/CategoryModal';
-import Category from '../components/menu/Category';
+import Categories from '../components/menu/Categories';
 
 export default class Menu extends Component {
     state = {
         categoryModal: false,
-        categories: {},
+        categories: false,
         selectedCategory: false,
     }
     
     componentDidMount() {
-        this.getMenu();
         this.getCategory();
     }
 
@@ -37,6 +36,10 @@ export default class Menu extends Component {
         if(categoryId && shopId) {
             const selectedCategory = await API.getCategory(shopId, categoryId);
             this.setState({selectedCategory})
+        } else if (shopId) {
+            this.getMenu();
+        } else {
+            document.location = "/";
         }
     }
 
@@ -78,10 +81,10 @@ export default class Menu extends Component {
 
     render() {
         const { categoryModal, categories, selectedCategory } = this.state;
-        return selectedCategory ? (
-            <Category updateCategory={this.updateCategory.bind(this)} category={selectedCategory} resetCategory={this.resetCategory.bind(this)} />
-        ) : (
-            <Container>
+        if(selectedCategory) {
+            return <Categories updateCategory={this.updateCategory.bind(this)} category={selectedCategory} resetCategory={this.resetCategory.bind(this)} />
+        } else if (categories) {
+            return (<Container>
                 <Row>
                     <Link to="/">Zurück</Link>
                 </Row>
@@ -97,8 +100,10 @@ export default class Menu extends Component {
                     ))}
                 </Row>
                 <CategoryModal addCategory={this.addCategory.bind(this)} modal={categoryModal} toggleModal={this.toggleModal.bind(this)} />
-            </Container>
-        );
+            </Container>)
+        } else {
+            return <div />
+        }
     }   
 }
 

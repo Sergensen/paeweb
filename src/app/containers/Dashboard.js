@@ -14,6 +14,8 @@ export default class Dashboard extends Component {
     }
 
     async signOut () {
+        API.resetShop();
+        API.resetCategory();
         await auth.signOut()
         document.location.href = "/login";
     }
@@ -47,10 +49,11 @@ export default class Dashboard extends Component {
             createShopModal: false
         });
     }
-    
+
     async resetShop() {
         const { shops } = this.state;
         API.resetShop();
+        API.resetCategory();
         this.setState({shopId: false});
         await this.loadShops(); 
     }
