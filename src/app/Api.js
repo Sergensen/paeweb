@@ -4,11 +4,13 @@ async function getShopsOfUser (uid) {
     const snap = await firestore.collection("users").doc(uid).collection("shops").get();
     let promises = [];
 
-    snap.forEach(async doc => {
-        const { shopId } = doc.data();
-        promises.push(getShop(shopId));
-    })
-    
+    if (!snap.empty) {
+        snap.forEach(async doc => {
+            const { shopId } = doc.data();
+            promises.push(getShop(shopId));
+        })
+    }
+
     const shops = await Promise.all(promises);
     return shops;
 }
@@ -96,10 +98,13 @@ async function getOpeningHours(shopId) {
     const snap = await firestore.collection("shops").doc(shopId).collection("openingHours").get();
     let openingHours = {}
 
-    snap.forEach(async doc => {
-        const day = doc.data();
-        openingHours[doc.id] = day;
-    })
+    if (!snap.empty) {
+        snap.forEach(async doc => {
+            const day = doc.data();
+            openingHours[doc.id] = day;
+        })
+    }
+    
 
     return openingHours;
 }
@@ -108,11 +113,13 @@ async function getMenu(shopId) {
     const snap = await firestore.collection("shops").doc(shopId).collection("menu").get();
     let categories = {}
 
-    snap.forEach(async doc => {
-        const category = doc.data();
-        categories[doc.id] = category;
-    })
-
+    if (!snap.empty) {
+        snap.forEach(async doc => {
+            const category = doc.data();
+            categories[doc.id] = category;
+        })
+    }
+    
     return categories;
 }
 
@@ -150,10 +157,14 @@ async function getCategory(shopId, categoryId) {
 
     const snap = await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").get();
     let products = {}
-    snap.forEach(async doc => {
-        const product = doc.data();
-        products[doc.id] = product;
-    })
+    
+    if (!snap.empty) {
+        snap.forEach(async doc => {
+            const product = doc.data();
+            products[doc.id] = product;
+        })
+    }
+    
     category.products = products;
 
     return category;
@@ -180,26 +191,30 @@ async function addProduct(shopId, categoryId, name, description, price, extras) 
 }
 
 async function getExtrasOfCategory(shopId, categoryId) {
-    const snap = firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("extras").get();
-    let extras = {}
+    const snap = await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("extras").get();
+    let extras = []
 
-    snap.forEach(async doc => {
-        const extra = doc.data();
-        extras.push(extra)
-    })
+    if (!snap.empty) {
+        snap.forEach(doc => {
+            const extra = doc.data();
+            extras.push(extra)
+        })
+    }
+    
 
     return extras;
 }
 
 async function getExtrasOfProduct(shopId, categoryId, productId) {
-    const snap = firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(productId).collection("extras").get();
+    const snap = await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(productId).collection("extras").get();
     let extras = []
 
-    snap.forEach(async doc => {
-        const extra = doc.data();
-        extras.push(extra)
-    })
-
+    if (!snap.empty) {
+        snap.forEach(doc => {
+            const extra = doc.data();
+            extras.push(extra)
+        })
+    }
     return extras;
 }
 

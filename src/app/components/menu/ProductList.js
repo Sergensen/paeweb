@@ -15,7 +15,7 @@ export default class ProductList extends Component {
 
         this.setState(prev => ({
             productModal: !prev.productModal,
-            selected: (i ? products[i] : false)
+            selected: (i ? i : false)
         }))
     }
 
@@ -46,7 +46,7 @@ export default class ProductList extends Component {
                         </Row>
                     )
                 })}
-                <ProductModal product={selected} create={false} toggleModal={this.toggleModal.bind(this)} modal={productModal} />
+                <ProductModal product={products[selected]} productId={selected} create={false} toggleModal={this.toggleModal.bind(this)} modal={productModal} />
             </Container>
         );
     }
