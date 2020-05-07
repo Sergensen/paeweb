@@ -29,15 +29,15 @@ export default class LoginContainer extends Component {
                     <Row>
                         <Col>
                             <Tab.Content>
-                                <div style={styles.formElementsContainer}>
-                                    {
-                                        Object.keys(data).map(key => (
-                                            <Tab.Pane key={key} eventKey={key}>
+                                {
+                                    Object.keys(data).map(key => (
+                                        <Tab.Pane key={key} eventKey={key}>
+                                            <div style={styles.formElementsContainer}>
                                                 <FormElement signInUpWithEmail={signInUpWithEmail.bind(this)} loginWithGoogle={loginWithGoogle.bind(this)} data={data[key]} />
-                                            </Tab.Pane>
-                                        ))
-                                    }
-                                </div>
+                                            </div>
+                                        </Tab.Pane>
+                                    ))
+                                }
                             </Tab.Content>
                         </Col>
                     </Row>
@@ -51,17 +51,19 @@ export default class LoginContainer extends Component {
 const styles = {
     container: {
         backgroundColor: "white",
-        // padding: 20,
-        marginTop: 20,
+        marginTop: 150,
+        padding: "0px 0px 20px 0px",
         width: isMobile ? "100%" : "30%",
         boxShadow: "0px 0px 1px 0px",
-        // backgroundColor: "red",
         minWidth: 400,
+        zIndex: 100,
+
         // display: "flex",
         // flexShrink: 1,
-        // width: "%"
+        // flexGrow: 0,
+        // height: "auto"
     },
-    formElementsContainer:{
+    formElementsContainer: {
         margin: "10px 20px 0px 20px"
     }
 

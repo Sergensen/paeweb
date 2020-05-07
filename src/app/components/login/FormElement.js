@@ -29,7 +29,7 @@ export default class FormElement extends Component {
         return (
             <Container>
                 <Row>
-                    <Form style={{width: "100%"}}>
+                    <Form style={{ width: "100%" }}>
                         {
                             Object.keys(inputs).map(key => (
                                 <Form.Group key={key} controlId={inputs[key].controlId}>
@@ -41,7 +41,10 @@ export default class FormElement extends Component {
                     </Form>
                 </Row>
                 <Row>
-                    <Button style={{...element, ...text}} onClick={() => this.signInOrUp()}>{method}</Button>
+                    <Form.Check style={{margin: "0px 0px 10px 0px"}} type="checkbox" label="Angemeldet bleiben" />
+                </Row>
+                <Row>
+                    <Button style={{ ...element, ...text }} onClick={() => this.signInOrUp()}>{method}</Button>
                 </Row>
                 <Row>
                     <div style={styles.googleContainer}>
@@ -51,7 +54,6 @@ export default class FormElement extends Component {
                         <Button style={styles.googleButton} onClick={this.props.loginWithGoogle.bind(this)}>
                             {google}
                         </Button>
-
                     </div>
                 </Row>
             </Container>
@@ -75,7 +77,7 @@ const styles = {
     },
     googleButton: {
         // ...element,
-        ...text,    
+        ...text,
         // backgroundColor: "#4285F4",
         flex: 1,
         borderRadius: "0px .25rem .25rem 0px",
@@ -92,7 +94,7 @@ const styles = {
         borderRadius: ".25rem 0px 0px .25rem",
 
     },
-    googleImage:{
+    googleImage: {
         width: 18,
         height: 18,
     }

@@ -4,7 +4,7 @@ import LoginContainer from '../components/login/LoginContainer';
 import { Container, Row, Col, Nav, Tab } from 'react-bootstrap';
 import { googleProvider, auth } from '../Firebase';
 import placeBg from '../res/pizza-background.jpg'
-
+import CONST from '../Constants'
 
 
 const data = {
@@ -84,6 +84,9 @@ export default class Login extends Component {
         const { key } = this.state;
         return (
             <div style={styles.container}>
+                <div style={styles.headerContainer}>
+                    <p style={{color: "white", fontSize: 35, fontWeight: "bold"}}>PAE Logo</p>
+                </div>
                 <LoginContainer          
                     tabKey={key}
                     setKey={this.setKey.bind(this)}
@@ -107,13 +110,27 @@ const styles = {
         // height: "100%"
         flex: 1,
         justifyContent: "center",
+        alignItems: "flex-start",
         backgroundImage: `url(${placeBg})`,
         width: "100vw",
-        height: "100vh"
+        height: "100vh",
 
         //justifyContent: "center",
         // width: 500,
         // height: 500
-    }
+    },
+    headerContainer:{
+        position: "fixed",
+        // backgroundColor: CONST.COLORS.accentRed,
+        backgroundColor: "#007bff",        
+        top: 0,
+        left: "10%",
+        width: 250,
+        height: 80,
+        borderRadius: "0 0 20px 20px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
 
 }
