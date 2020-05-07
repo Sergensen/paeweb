@@ -57,7 +57,7 @@ const styles = {
         boxShadow: "0px 0px 1px 0px",
         minWidth: 400,
         zIndex: 100,
-
+        borderRadius: 5,
         // display: "flex",
         // flexShrink: 1,
         // flexGrow: 0,

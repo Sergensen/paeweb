@@ -114,7 +114,7 @@ const styles = {
         backgroundImage: `url(${placeBg})`,
         width: "100vw",
         height: "100vh",
-
+        // borderRadius: 20,
         //justifyContent: "center",
         // width: 500,
         // height: 500
