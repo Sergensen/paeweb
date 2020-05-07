@@ -58,6 +58,16 @@ export default class Dashboard extends Component {
         await this.loadShops(); 
     }
 
+    async deleteShop(shopId) {
+        const { shops } = this.state;
+        delete shops[shopId];
+
+        if(shopId && window.confirm("Möchten Sie den Shop wirklich löschen?")) 
+            await API.deleteShop(shopId);
+
+        this.setState({shops})
+    }
+
 
     toggleModal(type, value) {
         this.setState({[type]: value})
@@ -88,21 +98,18 @@ export default class Dashboard extends Component {
                     Guten Tag {user.displayName+"!" || "!"}
                 </Row>
                 {shopId ? (
-                    <ShopNavigator resetShop={this.resetShop.bind(this)} />
+                    <ShopNavigator shopId={shopId} resetShop={this.resetShop.bind(this)} />
                 ) : (
                     <Container>
                         <Row>
                             {shops ? "Wählen Sie den Store, den Sie bearbeiten möchten." : "Sie besitzen noch keinen Shop"}
                         </Row>
-                        {(shops.length > 0) && <Row>
-                            {
-                                shops.map(({name, shopId}) => (
-                                    <Col key={shopId}>
-                                        <Button variant="outline-primary" onClick={() => this.setShop(shopId)}>{name}</Button>
-                                    </Col>
-                                ))
-                            }
-                        </Row>}
+                        {(shops.length > 0) && shops.map(({name, shopId}) => (
+                            <Row  key={shopId}>
+                                <Button onClick={() => this.setShop(shopId)}>{name}</Button>
+                                <Button onClick={() => this.deleteShop(shopId)}>Löschen</Button>
+                            </Row>
+                        ))}
                         <Row>
                             
                             <Button onClick={() => this.toggleModal("createShopModal" ,true)}>Neuen Shop erstellen</Button>

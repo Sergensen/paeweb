@@ -22,7 +22,7 @@ export default class ProductModal extends Component {
         window.location.reload()
     }
     
-    async componentDidUpdate() {
+    async componentDidMount() {
         const shopId = API.getLocalShop();
         const categoryId = API.getLocalCategory();
         const { create, product, productId } = this.props;
@@ -35,15 +35,6 @@ export default class ProductModal extends Component {
                 })
             }
         }
-    }
-
-    componentDidMount() {
-        this.setState({
-            name: "",
-            description: "",
-            price: "",
-            extras: [],
-        })
     }
 
     changeExtra(i, type, value) {
@@ -67,18 +58,10 @@ export default class ProductModal extends Component {
         this.setState({extras})
     }
 
-    async loadExtras() {
-        let { extras } = this.state;
-        const shopId = API.getLocalShop();
-        const categoryId = API.getLocalCategory();
-        const newExtras = await API.getExtrasOfCategory(shopId, categoryId);
-        extras = extras.concat(newExtras);
-        this.setState({extras})
-    }
-
     render() {
         const { toggleModal, modal, create, product } = this.props;
         const { name, description, price, extras } = this.state;
+
         return (
             <Modal show={modal} onHide={() => toggleModal()}>  
                 <Modal.Header closeButton>
@@ -113,9 +96,6 @@ export default class ProductModal extends Component {
                                 <Button onClick={() => this.addExtra()} variant="primary" size="sm">
                                     Neue
                                 </Button> {' '}
-                                <Button onClick={() => this.loadExtras()} variant="primary" size="sm">
-                                    Bestehende
-                                </Button>
                             </Col>
                         </Row>
 

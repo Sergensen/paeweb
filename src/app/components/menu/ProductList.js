@@ -10,12 +10,12 @@ export default class ProductList extends Component {
         selected: false
     }
 
-    toggleModal(i = false) {
+    async toggleModal(i = false) {
         const { products } = this.props;
+        await this.setState({ selected: (i ? i : false) })
 
         this.setState(prev => ({
             productModal: !prev.productModal,
-            selected: (i ? i : false)
         }))
     }
 
@@ -23,7 +23,7 @@ export default class ProductList extends Component {
         const { deleteProduct } = this.props;
         const shopId = API.getLocalShop();
         const categoryId = API.getLocalCategory();
-        if(shopId && categoryId && productId) {
+        if(shopId && categoryId && productId && window.confirm("Möchten Sie das Produkt wirklich löschen?")) {
             deleteProduct(shopId, categoryId, productId);
         } 
     }
@@ -31,6 +31,7 @@ export default class ProductList extends Component {
     render() {
         const { products } = this.props;
         const { productModal, selected } = this.state;
+
         return (
             <Container>
                 {Object.keys(products).map(i => {
@@ -41,12 +42,12 @@ export default class ProductList extends Component {
                             <Col> {price} </Col>
                             <Col>
                                 <Button onClick={() => this.toggleModal(i)}>Bearbeiten</Button>
-                                {/* todo <Button onClick={() => this.delete(i)}>Löschen</Button> */}
+                                <Button onClick={() => this.delete(i)}>Löschen</Button>
                             </Col>
                         </Row>
                     )
                 })}
-                <ProductModal product={products[selected]} productId={selected} create={false} toggleModal={this.toggleModal.bind(this)} modal={productModal} />
+                {products[selected] && <ProductModal product={products[selected]} productId={selected} create={false} toggleModal={this.toggleModal.bind(this)} modal={productModal} />}
             </Container>
         );
     }

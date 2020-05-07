@@ -46,8 +46,12 @@ export default class Categories extends Component {
 
     async deleteProduct(shopId, categoryId, productId) {
         const { products } = this.state;
-        delete products(productId);
+
+        //delete products[productId];
+
         await API.deleteProduct(shopId, categoryId, productId)
+
+        this.setState({products})
     }
 
     render() {

@@ -190,21 +190,6 @@ async function addProduct(shopId, categoryId, name, description, price, extras) 
     await Promise.all(promises)
 }
 
-async function getExtrasOfCategory(shopId, categoryId) {
-    const snap = await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("extras").get();
-    let extras = []
-
-    if (!snap.empty) {
-        snap.forEach(doc => {
-            const extra = doc.data();
-            extras.push(extra)
-        })
-    }
-    
-
-    return extras;
-}
-
 async function getExtrasOfProduct(shopId, categoryId, productId) {
     const snap = await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(productId).collection("extras").get();
     let extras = []
@@ -219,7 +204,7 @@ async function getExtrasOfProduct(shopId, categoryId, productId) {
 }
 
 async function addExtrasToProduct(shopId, categoryId, productId, extras) {
-    let promises = [mapExtrasToCategory(shopId, categoryId, extras)];
+    let promises = [];
     
     extras.forEach(extra => promises.push(
         firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(productId).collection("extras").doc(extra.name.toLowerCase()).set({
@@ -231,30 +216,26 @@ async function addExtrasToProduct(shopId, categoryId, productId, extras) {
     await Promise.all(promises);
 }
 
-async function mapExtrasToCategory(shopId, categoryId, extras) {
-    let promises = [];
-    extras.forEach(extra => promises.push(
-        firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("extras").doc(extra.name.toLowerCase()).set({
-            name: extra.name, 
-            price: extra.price, 
-        })
-    ))
-
-    await Promise.all(promises);
+async function deleteProduct(shopId, categoryId, productId) {
+    await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).collection("products").doc(productId).delete();
 }
 
-function deleteProduct(shopId, categoryId, productId) {
-    //Todo
-    return new Promise((resolve, reject) => {
-        resolve();
-    })
+
+async function deleteCategory(shopId, categoryId) {
+    await firestore.collection("shops").doc(shopId).collection("menu").doc(categoryId).delete();
+}
+
+
+async function deleteShop(shopId) {
+    await firestore.collection("shops").doc(shopId).delete();
 }
 
 
 export default {
-    getExtrasOfCategory,
     getExtrasOfProduct,
     deleteProduct,
+    deleteCategory,
+    deleteShop,
     updateCategory,
     getShopsOfUser,
     addProduct,

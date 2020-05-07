@@ -60,6 +60,16 @@ export default class Menu extends Component {
         await this.getMenu(); 
     }
 
+    async deleteCategory(categoryId) {
+        const shopId = API.getLocalShop();
+        const { categories } = this.state;
+        delete categories[categoryId];
+
+        if(categoryId && shopId && window.confirm("Möchten Sie die Kategorie wirklich löschen?"))
+            await API.deleteCategory(shopId, categoryId);
+
+        this.setState({categories})
+    }
 
     async addCategory(name, description) {
         const shopId = API.getLocalShop();
@@ -94,11 +104,12 @@ export default class Menu extends Component {
                 <Row>
                     <Button onClick={() => this.toggleModal("categoryModal", true)}>Kategorie hinzufügen</Button>
                 </Row>
-                <Row>
                     {Object.keys(categories).map(key => (
-                        <Button onClick={() => this.setCategory(key)} key={key}>{categories[key].name + " (" + categories[key].products + " Produkte)"}</Button>
+                        <Row key={key}>
+                            <Button onClick={() => this.setCategory(key)}>{categories[key].name + " (" + categories[key].products + " Produkte)"}</Button>
+                            <Button onClick={() => this.deleteCategory(key)}>Löschen</Button>
+                        </Row>
                     ))}
-                </Row>
                 <CategoryModal addCategory={this.addCategory.bind(this)} modal={categoryModal} toggleModal={this.toggleModal.bind(this)} />
             </Container>)
         } else {

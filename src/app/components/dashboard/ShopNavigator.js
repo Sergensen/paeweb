@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import QRCode from 'qrcode.react';
 
 export default class ShopNavigator extends Component {
     render() {
-        const { resetShop } = this.props;
+        const { resetShop, shopId } = this.props;
         return (
             <Container>
                 <Row>
@@ -23,6 +24,9 @@ export default class ShopNavigator extends Component {
                         Klicke hier um deine Bestellungen in Echtzeit zu sehen.
                         <Link to="/orders">Weiter</Link>
                     </Col>
+                </Row>
+                <Row>
+                    <QRCode value={shopId} />
                 </Row>
             </Container>
         );
