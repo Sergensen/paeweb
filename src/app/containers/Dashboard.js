@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { auth, firestore } from '../Firebase';
 import { Link } from "react-router-dom";
 import ShopModal from '../components/dashboard/ShopModal';

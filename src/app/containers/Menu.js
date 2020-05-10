@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import API from '../Api';
 import CategoryModal from '../components/menu/CategoryModal';
 import Categories from '../components/menu/Categories';
+import { isMobile } from "react-device-detect";
+import CategoryImage from '../res/pizza-background.jpg'
+import PlusIcon from '../res/plus-128.png'
+// import { ICON_NAME } from 'react-icons/md';
+import { MdArrowBack } from 'react-icons/md'
 
 export default class Menu extends Component {
     state = {
@@ -11,16 +16,16 @@ export default class Menu extends Component {
         categories: false,
         selectedCategory: false,
     }
-    
+
     componentDidMount() {
         this.getCategory();
     }
 
-    async getMenu () {
+    async getMenu() {
         const shopId = API.getLocalShop();
-        if(shopId) {
+        if (shopId) {
             const categories = await API.getMenu(shopId);
-            this.setState({shopId, categories})
+            this.setState({ shopId, categories })
         }
     }
 
@@ -33,9 +38,9 @@ export default class Menu extends Component {
     async getCategory() {
         const categoryId = API.getLocalCategory();
         const shopId = API.getLocalShop();
-        if(categoryId && shopId) {
+        if (categoryId && shopId) {
             const selectedCategory = await API.getCategory(shopId, categoryId);
-            this.setState({selectedCategory})
+            this.setState({ selectedCategory })
         } else if (shopId) {
             this.getMenu();
         } else {
@@ -52,12 +57,12 @@ export default class Menu extends Component {
 
         await this.getCategory();
     }
-    
+
     async resetCategory() {
         const { selectedCategory, categories } = this.state;
         API.resetCategory();
-        this.setState({selectedCategory: false});
-        await this.getMenu(); 
+        this.setState({ selectedCategory: false });
+        await this.getMenu();
     }
 
     async deleteCategory(categoryId) {
@@ -65,15 +70,15 @@ export default class Menu extends Component {
         const { categories } = this.state;
         delete categories[categoryId];
 
-        if(categoryId && shopId && window.confirm("Möchten Sie die Kategorie wirklich löschen?"))
+        if (categoryId && shopId && window.confirm("Möchten Sie die Kategorie wirklich löschen?"))
             await API.deleteCategory(shopId, categoryId);
 
-        this.setState({categories})
+        this.setState({ categories })
     }
 
     async addCategory(name, description) {
         const shopId = API.getLocalShop();
-        if(shopId) {
+        if (shopId) {
             const { categories } = this.state;
             await API.addCategory(shopId, name, description);
             this.toggleModal("categoryModal", false)
@@ -84,42 +89,156 @@ export default class Menu extends Component {
     async updateCategory(name, description) {
         const shopId = API.getLocalShop();
         const categoryId = API.getLocalCategory();
-        if(categoryId && shopId) {
+        if (categoryId && shopId) {
             await API.updateCategory(shopId, categoryId, name, description);
         }
     }
 
     render() {
         const { categoryModal, categories, selectedCategory } = this.state;
-        if(selectedCategory) {
+        if (selectedCategory) {
             return <Categories updateCategory={this.updateCategory.bind(this)} category={selectedCategory} resetCategory={this.resetCategory.bind(this)} />
         } else if (categories) {
-            return (<Container>
-                <Row>
-                    <Link to="/">Zurück</Link>
-                </Row>
-                {Object.keys(categories).length === 0 && (<Row>
-                    Deine Speisekarte ist noch leer.
-                </Row>)}
-                <Row>
-                    <Button onClick={() => this.toggleModal("categoryModal", true)}>Kategorie hinzufügen</Button>
-                </Row>
-                    {Object.keys(categories).map(key => (
-                        <Row key={key}>
-                            <Button onClick={() => this.setCategory(key)}>{categories[key].name + " (" + categories[key].products + " Produkte)"}</Button>
-                            <Button onClick={() => this.deleteCategory(key)}>Löschen</Button>
-                        </Row>
-                    ))}
-                <CategoryModal addCategory={this.addCategory.bind(this)} modal={categoryModal} toggleModal={this.toggleModal.bind(this)} />
-            </Container>)
+            return (
+                <div>
+
+                    <div style={styles.headerContainer}>
+                        <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
+                            PaeLogo
+                        </div>
+                        <div style={styles.welcomeTextContainer}>
+                            <div style={styles.welcomeText}>Kategorien</div>
+                        </div>
+                    </div>
+
+                    <div style={styles.menuContainer}>
+                        <div style={{margin: 5}}>
+                            <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
+                        </div>
+                        {Object.keys(categories).length === 0 && (
+                            <div>
+                                Deine Speisekarte ist noch leer.
+                            </div>)}
+                        <div style={styles.categoriesContainer}>
+                            {Object.keys(categories).map(key => (
+                                <div key={key} style={styles.aCategory} className="shopContainerHover" onClick={() => this.setCategory(key)}>
+                                    <div style={styles.imageContainer}>
+                                        <img src={CategoryImage} style={styles.image} />
+                                    </div>
+                                    <div style={styles.titleText}>{categories[key].name + " (" + categories[key].products + " Produkte)"}</div>
+                                    {/* onMouseDown needed because of nested click events */}
+                                    {/* <div style={styles.deleteButtonContainer}> */}
+                                    <Button style={styles.deleteButton} onMouseDown={() => this.deleteCategory(key)}>Löschen</Button>
+
+                                    {/* </div> */}
+                                </div>
+                            ))}
+                            <div className="shopContainerHover" style={styles.aCategory} onClick={() => this.toggleModal("categoryModal", true)}>
+                                <div style={styles.imageContainer}>
+                                    <img src={PlusIcon} style={styles.plusImage} />
+                                </div>
+                                <p style={styles.addNewText}>Kategorie hinzufügen</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <CategoryModal addCategory={this.addCategory.bind(this)} modal={categoryModal} toggleModal={this.toggleModal.bind(this)} />
+                </div>)
         } else {
             return <div />
         }
-    }   
+    }
 }
 
 
 const styles = {
     container: {
+
+    },
+    headerContainer: {
+        backgroundColor: "orange",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        // height: 50,
+        position: "relative"
+    },
+    welcomeTextContainer: {
+        display: "flex",
+        flex: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 10
+    },
+    welcomeText: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    menuContainer: {
+        margin: isMobile ? 15 : "20px 30px 20px 30px",
+        // flexDirection: "column",
+        display: "flex",
+    },
+    categoriesContainer: {
+        display: "flex",
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap"
+    },
+    aCategory: {
+        minWidth: 250,
+        width: 250,
+        height: 250,
+        border: "1px solid lightgrey",
+        cursor: "pointer",
+        padding: 5,
+        margin: 5,
+        position: "relative"
+    },
+    selectedContainer: {
+        display: "flex",
+        flex: 3,
+        backgroundColor: "blue",
+    },
+    imageContainer: {
+        width: "100%",
+        height: 150,
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    image: {
+        width: "100%",
+        height: "undefined",
+    },
+    plusImage: {
+        width: "30%",
+        height: "undefined",
+    },
+    addNewText: {
+        textAlign: "center",
+        textAlignVertical: "center",
+    },
+    titleText: {
+        // fontWeight: "bold",
+        fontSize: 17,
+        margin: 5
+    },
+    deleteButtonContainer: {
+        // width: "100%",
+        // height: "100%",
+        backgroundColor: "red"
+    },
+    deleteButton: {
+        position: "absolute",
+        // position: "relative",
+        bottom: 5,
+        right: 5,
+
     },
 }
