@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.shopContainerHover:hover{
+  border: 10px solid red;
+  background-color: #edf2ff;  
+}
