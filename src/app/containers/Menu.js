@@ -106,7 +106,7 @@ export default class Menu extends Component {
                 </Row>
                     {Object.keys(categories).map(key => (
                         <Row key={key}>
-                            <Button onClick={() => this.setCategory(key)}>{categories[key].name + " (" + categories[key].products + " Produkte)"}</Button>
+                            <Button onClick={() => this.setCategory(key)}>{categories[key].name}</Button>
                             <Button onClick={() => this.deleteCategory(key)}>Löschen</Button>
                         </Row>
                     ))}
