@@ -15,16 +15,6 @@ async function getShopsOfUser (uid) {
     return shops;
 }
 
-async function getOrders(shopId) {
-    const document = await firestore.collection("shops").doc(shopId).collection("orders").get();
-    if(document.exists) {
-        const orders = document.data();
-        return orders;
-    } else {
-        return null;
-    }
-}
-
 async function updateShop(shopId, name, description, backgroundColor) {
     await firestore.collection("shops").doc(shopId).update({
         name, 
@@ -230,6 +220,31 @@ async function deleteShop(shopId) {
     await firestore.collection("shops").doc(shopId).delete();
 }
 
+async function getOrders(shopId) {
+    const snap = await firestore.collection("shops").doc(shopId).collection("orders").get();
+    let promises = [];
+
+    if (!snap.empty) {
+        snap.forEach(doc => {
+            promises.push(getOrder(shopId, doc));
+        })
+    }
+    const orders = await Promise.all(promises);
+    console.log(orders)
+
+    return orders;
+}
+ 
+async function getOrder(shopId, orderDoc) {
+    let order = orderDoc.data();
+
+    const snap = await firestore.collection('shops').doc(shopId).collection("orders").doc(orderDoc.id).collection("items").get();
+    if (!snap.empty) 
+        order.items = [];
+        snap.forEach(doc =>  order.items.push(doc.data()));
+
+    return(order);
+}
 
 export default {
     getExtrasOfProduct,
