@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import ProductList from './ProductList';
 import ProductModal from './ProductModal';
 import API from '../../Api';
+import { MdArrowBack, MdCreate } from 'react-icons/md'
+import { FaPlus } from 'react-icons/fa'
 
 export default class Categories extends Component {
     state = {
@@ -19,8 +21,8 @@ export default class Categories extends Component {
         const { data, products } = this.props.category;
         const { name, description } = data;
         this.setState({
-            name, 
-            description, 
+            name,
+            description,
             products
         })
     }
@@ -33,7 +35,7 @@ export default class Categories extends Component {
             disabled: !disabled
         })
 
-        if(name && description && !disabled) {
+        if (name && description && !disabled) {
             updateCategory(name, description);
         }
     }
@@ -51,47 +53,93 @@ export default class Categories extends Component {
 
         await API.deleteProduct(shopId, categoryId, productId)
 
-        this.setState({products})
+        this.setState({ products })
     }
 
     render() {
         const { resetCategory } = this.props;
         const { name, description, disabled, products, productModal, create } = this.state;
         return (
-            <Container>
-                <Row>
-                    <Button onClick={() => resetCategory()}>Zurück</Button>
-                </Row>
-                <Row>
+            <div>
+                <div style={styles.headerContainer}>
+                    <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
+                        PaeLogo
+                        </div>
+                    <div style={styles.welcomeTextContainer}>
+                        <div style={styles.welcomeText}>Kategorien</div>
+                    </div>
+                </div>
+
+                <Container>
+                    <Button style={{ margin: "10px 0 10px 0" }} onClick={() => resetCategory()}><MdArrowBack size={20} />Zurück</Button>
+
+                    <div style={{ fontSize: 20, fontWeight: "bold" }}>Beschreibung:</div>
+
+
                     <Form>
-                        <Form.Group>
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control disabled={disabled} value={name || ""} onChange={(e) => this.setState({name: e.target.value})} type="text" placeholder="Burger" />
-                            <Form.Text>Gib hier den Namen der Kategorie ein. </Form.Text>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Beschreibung</Form.Label>
-                            <Form.Control disabled={disabled} value={description || ""} onChange={(e) => this.setState({description: e.target.value})} type="text" placeholder="Die besten Burger der Stadt!" />
-                            <Form.Text>Beschreibe deine Kategorie mit einem aussagekräftigen Satz.</Form.Text>
-                        </Form.Group>
-                        <Button onClick={() => this.updateCategory()}>{disabled ? "Bearbeiten" : "Speichern"}</Button>
+                        <Row>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control disabled={disabled} value={name || ""} onChange={(e) => this.setState({ name: e.target.value })} type="text" placeholder="Burger" />
+                                    <Form.Text>Gib hier den Namen der Kategorie ein. </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Beschreibung</Form.Label>
+                                    <Form.Control disabled={disabled} value={description || ""} onChange={(e) => this.setState({ description: e.target.value })} type="text" placeholder="Die besten Burger der Stadt!" />
+                                    <Form.Text>Beschreibe deine Kategorie mit einem aussagekräftigen Satz.</Form.Text>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Button onClick={() => this.updateCategory()}><MdCreate size={18}/> {disabled ? "Bearbeiten" : "Speichern"}</Button>
                     </Form>
-                </Row>
-                <br />
-                <Row>
-                    <Button onClick={() => this.setState({ productModal: true, create: true})}>Produkt hinzufügen</Button>
-                </Row>
-                {products && (<Row>
-                    {
-                        Object.keys(products).length === 0 ? (
-                            "Diese Kategorie ist noch leer."
-                        ) : (
-                            <ProductList deleteProduct={this.deleteProduct.bind(this)} products={products} />
-                        )
-                    }
-                </Row>)}
-                <ProductModal create={create} toggleModal={this.toggleModal.bind(this)} modal={productModal} />
-            </Container>
+
+                    <br />
+                    <div style={{ fontSize: 20, fontWeight: "bold" }}>Produkte:</div>
+                    <Row>
+                        <Button style={{ margin: 10 }} onClick={() => this.setState({ productModal: true, create: true })}><FaPlus /> Produkt hinzufügen</Button>
+                    </Row>
+                    {products && (
+                        <div style={styles.listContainer}>
+                            {
+                                Object.keys(products).length === 0 ? (
+                                    "Diese Kategorie ist noch leer."
+                                ) : (
+                                        <ProductList deleteProduct={this.deleteProduct.bind(this)} products={products} />
+                                    )
+                            }
+                        </div>)}
+                    <ProductModal create={create} toggleModal={this.toggleModal.bind(this)} modal={productModal} />
+                </Container>
+            </div>
         );
     }
+}
+
+const styles = {
+    headerContainer: {
+        backgroundColor: "orange",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        // height: 50,
+        position: "relative"
+    },
+    welcomeTextContainer: {
+        display: "flex",
+        flex: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 10
+    },
+    welcomeText: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    listContainer: {
+        marginTop: 15
+    },
 }

@@ -8,7 +8,7 @@ import { isMobile } from "react-device-detect";
 import CategoryImage from '../res/pizza-background.jpg'
 import PlusIcon from '../res/plus-128.png'
 // import { ICON_NAME } from 'react-icons/md';
-import { MdArrowBack } from 'react-icons/md'
+import { MdArrowBack, MdDelete } from 'react-icons/md'
 
 export default class Menu extends Component {
     state = {
@@ -128,7 +128,7 @@ export default class Menu extends Component {
                                     <div style={styles.titleText}>{categories[key].name + " (" + categories[key].products + " Produkte)"}</div>
                                     {/* onMouseDown needed because of nested click events */}
                                     {/* <div style={styles.deleteButtonContainer}> */}
-                                    <Button style={styles.deleteButton} onMouseDown={() => this.deleteCategory(key)}>Löschen</Button>
+                                    <Button style={styles.deleteButton} onMouseDown={() => this.deleteCategory(key)}><MdDelete size={20}/></Button>
 
                                     {/* </div> */}
                                 </div>
@@ -239,6 +239,6 @@ const styles = {
         // position: "relative",
         bottom: 5,
         right: 5,
-
+        fontSize: 0,
     },
 }

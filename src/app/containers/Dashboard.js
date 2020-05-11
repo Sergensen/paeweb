@@ -96,7 +96,7 @@ export default class Dashboard extends Component {
         return user ? (
             <div >
                 <div style={styles.headerContainer}>
-                    <div style={{flex: 1, color: "white", fontWeight: "bold", fontSize: 25, margin: 10,}}>
+                    <div style={{flex: 1, color: "white", fontWeight: "bold", fontSize: 25, margin: 5,}}>
                         PaeLogo
                     </div>
                     <div style={styles.welcomeTextContainer}>
