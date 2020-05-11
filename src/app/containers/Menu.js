@@ -103,8 +103,11 @@ export default class Menu extends Component {
                 <div>
 
                     <div style={styles.headerContainer}>
-                        <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
+                        {/* <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
                             PaeLogo
+                        </div> */}
+                        <div style={{ margin: 5 }}>
+                            <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
                         </div>
                         <div style={styles.welcomeTextContainer}>
                             <div style={styles.welcomeText}>Kategorien</div>
@@ -112,9 +115,7 @@ export default class Menu extends Component {
                     </div>
 
                     <div style={styles.menuContainer}>
-                        <div style={{ margin: 5 }}>
-                            <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
-                        </div>
+                        
                         <div style={styles.categoriesContainer}>
                             {Object.keys(categories).map(key => (
                                 <div key={key} style={styles.aCategory} className="shopContainerHover" onClick={() => this.setCategory(key)}>

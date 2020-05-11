@@ -9,13 +9,10 @@ import { FaEdit } from 'react-icons/fa'
 
 export default class ShopNavigator extends Component {
     render() {
-        const { resetShop, shopId } = this.props;
+        const { shopId } = this.props;
         return (
             <div>
                 <div style={styles.menuContainer}>
-                    <div style={{ margin: 5 }}>
-                        <Button onClick={() => resetShop()} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} />Zurück</Button>
-                    </div>
                     <Link to="/info" style={styles.aCategory} className="shopContainerHover">
                         <div style={styles.imageContainer}>
                             <MdStore size={80} />
@@ -52,6 +49,7 @@ const styles = {
         margin: isMobile ? 15 : "20px 30px 20px 30px",
         // flexDirection: "column",
         display: "flex",
+        justifyContent: "center",
     },
     aCategory: {
         minWidth: 250,

@@ -10,6 +10,7 @@ import PlusIcon from '../res/plus-128.png'
 import CONST from '../Constants'
 import { isMobile } from "react-device-detect";
 import placeBg from '../res/pizza-background.jpg'
+import { MdArrowBack } from 'react-icons/md'
 
 
 export default class Dashboard extends Component {
@@ -96,9 +97,15 @@ export default class Dashboard extends Component {
         return user ? (
             <div >
                 <div style={styles.headerContainer}>
-                    <div style={{flex: 1, color: "white", fontWeight: "bold", fontSize: 25, margin: 5,}}>
+                    {/* <div style={{flex: 1, color: "white", fontWeight: "bold", fontSize: 25, margin: 5,}}>
                         PaeLogo
-                    </div>
+                    </div> */}
+                    {shopId ? (
+                        <div style={{ margin: 5 }}>
+                            <Button onClick={() => this.resetShop()} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} />Zurück</Button>
+                        </div>) :
+                        <div />
+                    }
                     <div style={styles.welcomeTextContainer}>
                         <div style={styles.welcomeText}>Guten Tag {user.displayName + "!" || "!"}</div>
                     </div>
@@ -170,7 +177,6 @@ const gridElement = {
 const styles = {
     container: {
         margin: isMobile ? 15 : "20px 50px 20px 50px",
-
     },
     headerContainer: {
         backgroundColor: "orange",
@@ -181,9 +187,9 @@ const styles = {
         // height: 50,
     },
     signOutContainer: {
-        display: "flex",
-        flex: 1,
-        margin: 10,
+        // display: "flex",
+        // flex: 1,
+        margin: 5,
     },
     welcomeTextContainer: {
         display: "flex",
