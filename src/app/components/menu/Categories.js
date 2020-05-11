@@ -66,7 +66,7 @@ export default class Categories extends Component {
                         PaeLogo
                         </div>
                     <div style={styles.welcomeTextContainer}>
-                        <div style={styles.welcomeText}>Kategorien</div>
+                        <div style={styles.welcomeText}>{name}</div>
                     </div>
                 </div>
 
