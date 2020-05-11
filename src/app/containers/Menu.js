@@ -112,13 +112,9 @@ export default class Menu extends Component {
                     </div>
 
                     <div style={styles.menuContainer}>
-                        <div style={{margin: 5}}>
+                        <div style={{ margin: 5 }}>
                             <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
                         </div>
-                        {Object.keys(categories).length === 0 && (
-                            <div>
-                                Deine Speisekarte ist noch leer.
-                            </div>)}
                         <div style={styles.categoriesContainer}>
                             {Object.keys(categories).map(key => (
                                 <div key={key} style={styles.aCategory} className="shopContainerHover" onClick={() => this.setCategory(key)}>
@@ -128,7 +124,7 @@ export default class Menu extends Component {
                                     <div style={styles.titleText}>{categories[key].name + " (" + categories[key].products + " Produkte)"}</div>
                                     {/* onMouseDown needed because of nested click events */}
                                     {/* <div style={styles.deleteButtonContainer}> */}
-                                    <Button style={styles.deleteButton} onMouseDown={() => this.deleteCategory(key)}><MdDelete size={20}/></Button>
+                                    <Button style={styles.deleteButton} onMouseDown={() => this.deleteCategory(key)}><MdDelete size={20} /></Button>
 
                                     {/* </div> */}
                                 </div>
@@ -137,6 +133,11 @@ export default class Menu extends Component {
                                 <div style={styles.imageContainer}>
                                     <img src={PlusIcon} style={styles.plusImage} />
                                 </div>
+                                {Object.keys(categories).length === 0 && (
+                                    <p style={styles.addNewText}>
+                                        Deine Speisekarte ist noch leer.
+                                    </p>)
+                                }
                                 <p style={styles.addNewText}>Kategorie hinzufügen</p>
                             </div>
                         </div>
