@@ -52,7 +52,7 @@ export default class Info extends Component {
                             // onClick={() => this.setShop(shopId)}
                             >
 
-                                <div style={{ fontSize: 16 }}><MdAccountCircle color="grey" /> {customer}</div>
+                                <div style={{ fontSize: 16, marginLeft: 5 }}><MdAccountCircle color="grey" size={20}/> {customer}</div>
 
                                 {(items.length > 0) && items.map(({ count, name, price }) => (
 
@@ -104,8 +104,8 @@ const styles = {
         fontWeight: "bold",
     },
     imageContainer: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
