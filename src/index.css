@@ -13,6 +13,5 @@ code {
 }
 
 .shopContainerHover:hover{
-  border: 10px solid red;
   background-color: #edf2ff;  
 }

@@ -230,7 +230,6 @@ async function getOrders(shopId) {
         })
     }
     const orders = await Promise.all(promises);
-    console.log(orders)
 
     return orders;
 }
