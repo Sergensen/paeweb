@@ -39,16 +39,16 @@ export default class Info extends Component {
                         <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
                     </div>
                     <div style={styles.welcomeTextContainer}>
-                        <div style={styles.welcomeText}>Kategorien</div>
+                        <div style={styles.welcomeText}>Live-Bestellungen</div>
                     </div>
                 </div>
 
                 <div style={{ display: "flex", flex: 1, justifyContent: "center" }}>
                     <div style={{ width: "65%", minWidth: 600, padding: 25, }}>
-                        <div style={{ fontSize: 18, fontWeight: "bold", marginBottom: 5, backgroundColor: "white", borderRadius: 10, padding: 10 }}>Live-Bestellungen</div>
+                        {/* <div style={{ fontSize: 18, fontWeight: "bold", marginBottom: 5, backgroundColor: "white", borderRadius: 10, padding: 10 }}>Live-Bestellungen</div> */}
                         {(orders.length > 0) && orders.map(({ customer, aborted, accepted, items }) => (
 
-                            <div key={customer + items} className="shopContainerHover" style={{ width: "100%", padding: "10px 5px 10px 5px", backgroundColor: "white", margin: "10px 0 15px 0", borderRadius: 10, boxShadow: "0px 0px 5px 0px rgba(255,0,0,0.2)", border: "1px solid rgba(255, 0, 0, 0.2)" }}
+                            <div key={customer + items} className="shopContainerHover" style={{ width: "100%", padding: "10px 5px 10px 5px", backgroundColor: "white", margin: "0 0 15px 0", borderRadius: 10, boxShadow: "0px 0px 5px 0px rgba(255,0,0,0.2)", border: "1px solid rgba(255, 0, 0, 0.2)" }}
                             // onClick={() => this.setShop(shopId)}
                             >
 
