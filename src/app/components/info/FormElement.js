@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Row, Button, Form } from 'react-bootstrap';
-import { SketchPicker } from 'react-color'
 import OpeningHoursModal from './OpeningHoursModal';
 export default class FormElement extends Component {
     state = {
@@ -58,15 +57,7 @@ export default class FormElement extends Component {
                             <Form.Control value={shop && shop.description || ""} onChange={(e) => this.onChange(e, "description")} type="text" placeholder="Beschreibung deines Lokals" />
                             <Form.Text>Beschreibe dein Lokal mit einem aussagekräftigen Satz. </Form.Text>
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Farbe</Form.Label>
-                                <SketchPicker
-                                    color={ shop && shop.backgroundColor || '#ffffff' }
-                                    onChangeComplete={(color) => this.handleChangeComplete(color) }
-                                />                            
-                            <Form.Text>Wähle eine Farbe, die zu deinem Design gehört. </Form.Text>
-                            <Button onClick={() => this.toggleModal("openingHours", true)}>Öffnungszeiten bearbeiten</Button>
-                        </Form.Group>
+                        <Button onClick={() => this.toggleModal("openingHours", true)}>Öffnungszeiten bearbeiten</Button>
                     </Form>
                 </Row>
                 <Row>

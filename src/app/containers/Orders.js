@@ -32,7 +32,6 @@ export default class Info extends Component {
 
     render() {
         const { user, orders } = this.state;
-        console.log(orders);
         const red = "rgba(255,0,0,0.4)";
         const orange = "rgba(255, 165, 0,0.4)";
         const green = "rgba(0,255,0,0.3)";
@@ -62,7 +61,7 @@ export default class Info extends Component {
 
                                 <div style={{ fontSize: 18, marginLeft: 5, display: "flex", alignItems: "center" }}><MdAccountCircle color="grey" size={20} />{customer}</div>
 
-                                {(items.length > 0) && items.map(({ count, name, price }) => (
+                                {(items && items.length > 0) && items.map(({ count, name, price }) => (
 
                                     <div key={name + price} style={{ margin: 5, borderWidth: "0 0 1px 0", borderStyle: "solid", borderColor: "lightgrey", }}>
                                         <div style={{ display: "flex", flex: 1, flexDirection: "row", alignItems: "center" }}>
@@ -70,7 +69,7 @@ export default class Info extends Component {
                                                 <img src={foodBg} style={styles.image} />
                                             </div>
                                             <div>{count}x {name}</div>
-                                            <div style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}>{price.toFixed(2)}€</div>
+                                            <div style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}>{(parseInt(count) * parseFloat(price)).toFixed(2)}€</div>
                                         </div>
                                         {/* <p style={styles.titleText}>{name}</p> */}
                                         {/* <p style={styles.adressText}>Beispielstraße 2</p> */}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import QRCode from 'qrcode.react';
 import { isMobile } from "react-device-detect";
@@ -12,7 +12,8 @@ export default class ShopNavigator extends Component {
         const { shopId } = this.props;
         return (
             <div>
-                <div style={styles.menuContainer}>
+                <Card style={styles.menuContainer}>
+                    <Card.Body style={styles.menuContainer}>
                     <Link to="/info" style={styles.aCategory} className="shopContainerHover">
                         <div style={styles.imageContainer}>
                             <MdStore size={80} />
@@ -31,11 +32,14 @@ export default class ShopNavigator extends Component {
                         </div>
                         <div style={styles.titleText}>Echtzeit-Bestellungen</div>
                     </Link>
-                </div>
-                <div>
-                    Was das hier? -> {" "}
-                    <QRCode value={shopId} />
-                </div>
+                    </Card.Body>
+                </Card>
+                <Card style={styles.menuContainer}>
+                    <Card.Body>
+                        <p>Scanne deinen QR-Code um deinen Shop zu testen!</p>
+                        <QRCode value={shopId} />
+                    </Card.Body>
+                </Card>
             </div>
         );
     }

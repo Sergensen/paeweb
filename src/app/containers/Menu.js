@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { Button } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import API from '../Api';
 import CategoryModal from '../components/menu/CategoryModal';
 import Categories from '../components/menu/Categories';
@@ -100,7 +100,7 @@ export default class Menu extends Component {
             return <Categories updateCategory={this.updateCategory.bind(this)} category={selectedCategory} resetCategory={this.resetCategory.bind(this)} />
         } else if (categories) {
             return (
-                <div>
+                <Card>
 
                     <div style={styles.headerContainer}>
                         {/* <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
@@ -148,7 +148,7 @@ export default class Menu extends Component {
 
 
                     <CategoryModal addCategory={this.addCategory.bind(this)} modal={categoryModal} toggleModal={this.toggleModal.bind(this)} />
-                </div>)
+                </Card>)
         } else {
             return <div />
         }

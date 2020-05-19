@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Card } from 'react-bootstrap';
 import { auth, firestore } from '../Firebase';
 import { Link } from "react-router-dom";
 import ShopModal from '../components/dashboard/ShopModal';
@@ -122,7 +122,7 @@ export default class Dashboard extends Component {
                 {shopId ? (
                     <ShopNavigator shopId={shopId} resetShop={this.resetShop.bind(this)} />
                 ) : (
-                        <div style={styles.container}>
+                        <Card style={styles.container}>
                             {/* <div>
                                 {shops ? "Wählen Sie den Store, den Sie bearbeiten möchten." : "Sie besitzen noch keinen Shop"}
                             </div> */}
@@ -156,7 +156,7 @@ export default class Dashboard extends Component {
                                     <ShopModal createShop={this.createShop.bind(this)} modal={createShopModal} toggleModal={this.toggleModal.bind(this)} />
                                 </div>
                             </div>
-                        </div>
+                        </Card>
                     )}
             </div>
         ) : <div />;

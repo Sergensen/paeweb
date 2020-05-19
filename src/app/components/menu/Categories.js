@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import ProductList from './ProductList';
 import ProductModal from './ProductModal';
@@ -62,16 +62,15 @@ export default class Categories extends Component {
         return (
             <div>
                 <div style={styles.headerContainer}>
-                    <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
-                        PaeLogo
-                        </div>
+                    <Button style={{ margin: "10px 0 10px 0" }} onClick={() => resetCategory()}><MdArrowBack size={20} />Zurück</Button>
                     <div style={styles.welcomeTextContainer}>
                         <div style={styles.welcomeText}>{name}</div>
                     </div>
                 </div>
 
+            <Card>
+                <Card.Body>
                 <Container>
-                    <Button style={{ margin: "10px 0 10px 0" }} onClick={() => resetCategory()}><MdArrowBack size={20} />Zurück</Button>
 
                     <div style={{ fontSize: 20, fontWeight: "bold" }}>Beschreibung:</div>
 
@@ -113,6 +112,8 @@ export default class Categories extends Component {
                         </div>)}
                     <ProductModal create={create} toggleModal={this.toggleModal.bind(this)} modal={productModal} />
                 </Container>
+                </Card.Body>
+            </Card>
             </div>
         );
     }
