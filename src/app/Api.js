@@ -236,17 +236,33 @@ async function getOrders(shopId) {
  
 async function getOrder(shopId, orderDoc) {
     let order = orderDoc.data();
+    order.id = orderDoc.id;
 
     const snap = await firestore.collection('shops').doc(shopId).collection("orders").doc(orderDoc.id).collection("items").get();
-    if (!snap.empty) 
-        order.items = [];
-        snap.forEach(doc =>  order.items.push(doc.data()));
+    order.items = [];
 
+    if (!snap.empty)
+        snap.forEach(doc =>  order.items.push(doc.data()));
+       
     return(order);
+}
+
+async function cancelOrder(shopId, orderId) {
+    await firestore.collection("shops").doc(shopId).collection("orders").doc(orderId).update({
+        aborted: true
+    })
+}
+
+async function finishOrder(shopId, orderId) {
+    await firestore.collection("shops").doc(shopId).collection("orders").doc(orderId).update({
+        accepted: true
+    })
 }
 
 export default {
     getExtrasOfProduct,
+    cancelOrder,
+    finishOrder,
     deleteProduct,
     deleteCategory,
     deleteShop,
