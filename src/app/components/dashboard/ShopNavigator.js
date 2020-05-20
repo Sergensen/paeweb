@@ -38,7 +38,7 @@ export default class ShopNavigator extends Component {
                     <Card.Body style={styles.tables}>
                         <div>
                             <p>Scanne deinen QR-Code um deinen Shop zu testen!</p>
-                            <QRCode value={{shopId, table: 0}} />
+                            <QRCode value={JSON.stringify({shopId, table: 0})} />
                         </div>
                         <div></div>
                         <div></div>
@@ -48,15 +48,15 @@ export default class ShopNavigator extends Component {
                     <Card.Body style={styles.tables}>
                         <div>
                             <p>Tisch 1</p>
-                            <QRCode value={{shopId, table: 1}} />
+                            <QRCode value={JSON.stringify({shopId, table: 1})} />
                         </div>
                         <div>
                             <p>Tisch 2</p>
-                            <QRCode value={{shopId, table: 2}} />
+                            <QRCode value={JSON.stringify({shopId, table: 2})} />
                         </div>
                         <div>
                             <p>Tisch 3</p>
-                            <QRCode value={{shopId, table: 3}} />
+                            <QRCode value={JSON.stringify({shopId, table: 3})} />
                         </div>
                     </Card.Body>
                 </Card>
