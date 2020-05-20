@@ -19,7 +19,7 @@ export default class LoginContainer extends Component {
                                 {
                                     Object.keys(data).map(key => (
                                         <Nav.Item key={key}>
-                                            <Nav.Link eventKey={key}>{data[key].method}</Nav.Link>
+                                            <Nav.Link style={styles.tab} eventKey={key}>{data[key].method}</Nav.Link>
                                         </Nav.Item>
                                     ))
                                 }
@@ -65,6 +65,9 @@ const styles = {
     },
     formElementsContainer: {
         margin: "10px 20px 0px 20px"
+    },
+    tab: {
+        color: "orange"
     }
 
 }

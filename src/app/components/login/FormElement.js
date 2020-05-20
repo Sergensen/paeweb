@@ -64,6 +64,8 @@ export default class FormElement extends Component {
 const element = {
     width: "100%",
     margin: "0px 0px 10px 0px",
+    backgroundColor: "orange",
+    borderColor: "orange"
 }
 
 const text = {
@@ -81,16 +83,18 @@ const styles = {
         // backgroundColor: "#4285F4",
         flex: 1,
         borderRadius: "0px .25rem .25rem 0px",
+        backgroundColor: "orange",
+        borderColor: "orange"
     },
     googleIcon: {
         width: 38,
         height: 38,
-        borderColor: "#4285F4",
         borderWidth: 1,
         borderStyle: "solid",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        borderColor: "orange",
         borderRadius: ".25rem 0px 0px .25rem",
 
     },

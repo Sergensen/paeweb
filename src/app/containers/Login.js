@@ -85,7 +85,7 @@ export default class Login extends Component {
         return (
             <div style={styles.container}>
                 <div style={styles.headerContainer}>
-                    <p style={{color: "white", fontSize: 35, fontWeight: "bold"}}>PAE Logo</p>
+                    <img style={styles.image} src={require("../res/images/pae1.png")} />
                 </div>
                 <LoginContainer          
                     tabKey={key}
@@ -121,16 +121,19 @@ const styles = {
     },
     headerContainer:{
         position: "fixed",
-        // backgroundColor: CONST.COLORS.accentRed,
-        backgroundColor: "#007bff",        
+        backgroundColor: "rgba(255, 255, 255, 0.25)",        
         top: 0,
-        left: "10%",
-        width: 250,
-        height: 80,
+        left: 0,
+        width: "100%",
+        height: 150,
         borderRadius: "0 0 20px 20px",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        boxShadow: "0 25px 25px -2px rgba(255, 255, 255, 0.2)"
     },
+    image: {
+        height: "90%"
+    }
 
 }
