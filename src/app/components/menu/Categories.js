@@ -68,7 +68,7 @@ export default class Categories extends Component {
                     </div>
                 </div>
 
-            <Card>
+            <Card style={{maxWidth: 1080}}>
                 <Card.Body>
                 <Container>
 

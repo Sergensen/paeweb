@@ -95,17 +95,11 @@ export default class Dashboard extends Component {
         const { user } = this.props;
         const { shops, shopId, createShopModal } = this.state;
         return user ? (
-            <div >
+            <div style={styles.main}>
                 <div style={styles.headerContainer}>
-                    {/* <div style={{flex: 1, color: "white", fontWeight: "bold", fontSize: 25, margin: 5,}}>
-                        PaeLogo
-                    </div> */}
-                    {shopId ? (
-                        <div style={{ margin: 5 }}>
-                            <Button onClick={() => this.resetShop()} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} />Zurück</Button>
-                        </div>) :
-                        <div />
-                    }
+                    <div style={{ margin: 5 }}>
+                        <Button disabled={!shopId} onClick={() => this.resetShop()} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} />Zurück</Button>
+                    </div>
                     <div style={styles.welcomeTextContainer}>
                         <div style={styles.welcomeText}>Guten Tag {user.displayName + "!" || "!"}</div>
                     </div>
@@ -175,8 +169,15 @@ const gridElement = {
 }
 
 const styles = {
+    main: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
     container: {
         margin: isMobile ? 15 : "20px 50px 20px 50px",
+        maxWidth: 1080,
     },
     headerContainer: {
         backgroundColor: "orange",
@@ -184,7 +185,9 @@ const styles = {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        // height: 50,
+        height: 150,
+        width: "100%",
+        boxShadow: "0 1px 5px 0px orange"
     },
     signOutContainer: {
         // display: "flex",

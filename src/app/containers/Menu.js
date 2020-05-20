@@ -101,16 +101,15 @@ export default class Menu extends Component {
         } else if (categories) {
             return (
                 <Card>
-
                     <div style={styles.headerContainer}>
-                        {/* <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
-                            PaeLogo
-                        </div> */}
                         <div style={{ margin: 5 }}>
                             <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
                         </div>
-                        <div style={styles.welcomeTextContainer}>
-                            <div style={styles.welcomeText}>Kategorien</div>
+                        <div style={{flex: 10}} />
+                        <div style={styles.signOutContainer}>
+                            <Button onClick={() => this.signOut()}>
+                                Ausloggen
+                            </Button>
                         </div>
                     </div>
 
@@ -150,7 +149,21 @@ export default class Menu extends Component {
                     <CategoryModal addCategory={this.addCategory.bind(this)} modal={categoryModal} toggleModal={this.toggleModal.bind(this)} />
                 </Card>)
         } else {
-            return <div />
+            return (
+                <Card>
+                    <div style={styles.headerContainer}>
+                        <div style={{ margin: 5 }}>
+                            <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
+                        </div>
+                        <div style={{flex: 10}} />
+                        <div style={styles.signOutContainer}>
+                            <Button onClick={() => this.signOut()}>
+                                Ausloggen
+                            </Button>
+                        </div>
+                    </div>
+                </Card>
+            )
         }
     }
 }
@@ -166,8 +179,9 @@ const styles = {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        // height: 50,
-        position: "relative"
+        height: 150,
+        width: "100%",
+        boxShadow: "0 1px 5px 0px orange"
     },
     welcomeTextContainer: {
         display: "flex",
