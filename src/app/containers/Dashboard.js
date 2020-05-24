@@ -96,7 +96,7 @@ export default class Dashboard extends Component {
         const { shops, shopId, createShopModal } = this.state;
         return user ? (
             <div style={styles.main}>
-                <div style={styles.headerContainer}>
+                {/* <div style={styles.headerContainer}>
                     <div style={{ margin: 5 }}>
                         <Button disabled={!shopId} onClick={() => this.resetShop()} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} />Zurück</Button>
                     </div>
@@ -108,7 +108,7 @@ export default class Dashboard extends Component {
                             Ausloggen
                         </Button>
                     </div>
-                </div>
+                </div> */}
                 {/* <div style={{backgroundColor: "red", height: 100, width: "100%", overflow: "hidden", display: "flex", justifyContent: "center", alignItems: "flex-start"}}>
                     <img src={placeBg}></img>
                 </div> */}
@@ -173,7 +173,8 @@ const styles = {
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        // backgroundColor: "green"
     },
     container: {
         margin: isMobile ? 15 : "20px 50px 20px 50px",
