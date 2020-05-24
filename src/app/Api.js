@@ -220,20 +220,6 @@ async function deleteShop(shopId) {
     await firestore.collection("shops").doc(shopId).delete();
 }
 
-async function getOrders(shopId) {
-    const snap = await firestore.collection("shops").doc(shopId).collection("orders").get();
-    let promises = [];
-
-    if (!snap.empty) {
-        snap.forEach(doc => {
-            promises.push(getOrder(shopId, doc));
-        })
-    }
-    const orders = await Promise.all(promises);
-
-    return orders;
-}
- 
 async function getOrder(shopId, orderDoc) {
     let order = orderDoc.data();
     order.id = orderDoc.id;
@@ -271,7 +257,7 @@ export default {
     addProduct,
     getCategory,
     getOpeningHours,
-    getOrders,
+    getOrder,
     getMenu, 
     updateShop,
     saveOpeningHours,
