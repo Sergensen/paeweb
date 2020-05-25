@@ -51,12 +51,10 @@ export default class App extends Component {
                         <Header />
                         <Sidebar />
                         {/* <div style={{ position: "absolute", zIndex: -100, backgroundColor: "#ededed", width: "100vw", height: "100vh", }} /> */}
-                        <div style={{
-                            // display: "flex", flex: 1, justifyContent: "center", flexDirection: "column"
-                        }}>
                             <div style={{
                                 marginLeft: 200,
-                                marginTop: 50
+                                marginTop: 50,
+                                // backgroundColor: "#ededed"
                             }}>
                                 <div style={{
                                     width: "calc(100% - 200px)", height: 250, position: "absolute", top: 0, background: "rgb(255,119,0)",
@@ -74,12 +72,12 @@ export default class App extends Component {
                                     <Orders user={user} />
                                 </Route>
                                 <Route path="/">
+                                    {/* TODO: Wieso zeigt er das immer an?? */}
                                     <Dashboard user={user} />
                                 </Route>
 
 
                             </div>
-                        </div>
                     </div>
                     
                 </Switch>
