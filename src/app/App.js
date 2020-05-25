@@ -37,33 +37,36 @@ export default class App extends Component {
     render() {
         const { user } = this.state;
         return (
-            <div style={{
-                //display: "flex", flexDirection: "row", 
-                backgroundColor: "#ededed"
-            }}>
-                <Header />
-                <Sidebar />
+            <Router >
+                <Switch>
+                    <Route path="/login">
+                        <Login />
+                    </Route>
 
-
-
-                {/* <div style={{ position: "absolute", zIndex: -100, backgroundColor: "#ededed", width: "100vw", height: "100vh", }} /> */}
-                <div style={{
-                    // display: "flex", flex: 1, justifyContent: "center", flexDirection: "column"
-                }}>
                     <div style={{
-                        marginLeft: 200,
-                        marginTop: 50
+                        //display: "flex", flexDirection: "row",
+                        //TODO: hier nochmal gucken
+                        // backgroundColor: "#ededed"
                     }}>
-                        <div style={{
-                            width: "100%", height: 250, backgroundColor: "red", position: "absolute", top: 0, background: "rgb(255,119,0)",
-                            background: "linear-gradient(90deg, rgba(255,119,0,1) 0%, rgba(255,154,51,1) 65%, rgba(245,161,76,1) 100%)",
-                        }} />
+                        <Header />
+                        <Sidebar />
 
-                        <Router >
-                            <Switch>
-                                <Route path="/login">
-                                    <Login />
-                                </Route>
+
+
+                        {/* <div style={{ position: "absolute", zIndex: -100, backgroundColor: "#ededed", width: "100vw", height: "100vh", }} /> */}
+                        <div style={{
+                            // display: "flex", flex: 1, justifyContent: "center", flexDirection: "column"
+                        }}>
+                            <div style={{
+                                marginLeft: 200,
+                                marginTop: 50
+                            }}>
+                                <div style={{
+                                    width: "calc(100% - 200px)", height: 250, position: "absolute", top: 0, background: "rgb(255,119,0)",
+                                    background: "linear-gradient(90deg, rgba(255,119,0,1) 0%, rgba(255,154,51,1) 65%, rgba(245,161,76,1) 100%)",
+                                    zIndex: -1,
+                                }} />
+
                                 <Route path="/info">
                                     <Info user={user} />
                                 </Route>
@@ -76,12 +79,13 @@ export default class App extends Component {
                                 <Route path="/">
                                     <Dashboard user={user} />
                                 </Route>
-                            </Switch>
-                        </Router>
-                    </div>
 
-                </div>
-            </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </Switch>
+            </Router>
 
         );
     }
