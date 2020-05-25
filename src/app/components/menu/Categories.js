@@ -68,7 +68,7 @@ export default class Categories extends Component {
                     </div>
                 </div>
 
-            <Card style={{maxWidth: 1080}}>
+            <Card>
                 <Card.Body>
                 <Container>
 
@@ -121,7 +121,7 @@ export default class Categories extends Component {
 
 const styles = {
     headerContainer: {
-        backgroundColor: "orange",
+        // backgroundColor: "orange",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",

@@ -44,7 +44,7 @@ export default class FormElement extends Component {
     render() {
         const { shop, openingHours } = this.state;
         return (
-            <Container>
+            <Container style={{backgroundColor: "white", padding: "10px 30px 10px 30px"}}>
                 <Row>
                     <Form>
                         <Form.Group>

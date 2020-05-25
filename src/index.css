@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.shopContainerHover{
+  background-color: white;
+}
+
 .shopContainerHover:hover{
   background-color: #edf2ff;  
 }

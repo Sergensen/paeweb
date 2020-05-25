@@ -13,8 +13,8 @@ export default class Info extends Component {
 
     componentDidMount() {
         const shopId = API.getLocalShop();
-        if(shopId) {
-            this.setState({shopId})
+        if (shopId) {
+            this.setState({ shopId })
         }
     }
 
@@ -22,21 +22,21 @@ export default class Info extends Component {
         const { shopId, shop } = this.state;
         const { user } = this.props;
 
-        if(user && user.uid && shopId && !shop) {
+        if (user && user.uid && shopId && !shop) {
             const fetchedShop = await API.getShop(shopId);
-            if(fetchedShop) {
-                this.setState({shop: fetchedShop});
+            if (fetchedShop) {
+                this.setState({ shop: fetchedShop });
             } else {
                 document.location = "/";
             }
-        } else if(user && user.uid && !shopId ) {
+        } else if (user && user.uid && !shopId) {
             document.location = "/";
         }
     }
 
     async save(name, description, backgroundColor) {
         const { shopId } = this.state;
-        if(shopId, name, description, backgroundColor) {
+        if (shopId, name, description, backgroundColor) {
             await API.updateShop(shopId, name, description, backgroundColor);
             window.location.reload();
         }
@@ -47,7 +47,7 @@ export default class Info extends Component {
         return (
             <Container>
                 <Row>
-                    <Link to={""}>Zurück</Link>
+                    <Button><Link to={""} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}>Zurück</Link></Button>
                 </Row>
                 <Row>
                     {shop && <FormElement shopId={shopId} save={this.save.bind(this)} shop={shop} />}

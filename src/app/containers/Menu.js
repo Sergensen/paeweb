@@ -174,14 +174,14 @@ const styles = {
 
     },
     headerContainer: {
-        backgroundColor: "orange",
+        // backgroundColor: "orange",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        height: 150,
+        // height: 150,
         width: "100%",
-        boxShadow: "0 1px 5px 0px orange"
+        // boxShadow: "0 1px 5px 0px orange"
     },
     welcomeTextContainer: {
         display: "flex",
