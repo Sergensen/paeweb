@@ -121,19 +121,21 @@ const styles = {
     },
     headerContainer:{
         position: "fixed",
-        backgroundColor: "rgba(255, 255, 255, 0.25)",        
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: 150,
-        borderRadius: "0 0 20px 20px",
+        // backgroundColor: "rgba(255, 255, 255, 0.25)",        
+        // top: 0,
+        // left: 0,
+        // width: "100%",
+        // height: 100,
+        // borderRadius: "0 0 20px 20px",        
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        boxShadow: "0 25px 25px -2px rgba(255, 255, 255, 0.2)"
+        // boxShadow: "0 25px 25px -2px rgba(255, 255, 255, 0.2)"
     },
     image: {
-        height: "90%"
+        // height: "90%"
+        height: 80,
+        marginTop: 25
     }
 
 }

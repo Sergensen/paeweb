@@ -50,9 +50,6 @@ export default class App extends Component {
                     }}>
                         <Header />
                         <Sidebar />
-
-
-
                         {/* <div style={{ position: "absolute", zIndex: -100, backgroundColor: "#ededed", width: "100vw", height: "100vh", }} /> */}
                         <div style={{
                             // display: "flex", flex: 1, justifyContent: "center", flexDirection: "column"
@@ -84,6 +81,7 @@ export default class App extends Component {
                             </div>
                         </div>
                     </div>
+                    
                 </Switch>
             </Router>
 
