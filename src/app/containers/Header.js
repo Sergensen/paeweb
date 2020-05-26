@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { MdAccountCircle, MdNotificationsNone, MdFullscreen, MdSettings } from 'react-icons/md'
+import { Link } from "react-router-dom";
+import { Button } from 'react-bootstrap';
 
 export default class Header extends Component {
     state = {
@@ -10,6 +12,9 @@ export default class Header extends Component {
 
         return (
             <div style={styles.container}>
+                <div style={{ color: "white", fontSize: 25, fontWeight: "bold", margin: "5px 25px 5px 25px" }}>
+                    <Button size="lg" variant="outline-warning"><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}>Zurück</Link></Button>
+                </div>
                 <div style={{ color: "white", fontSize: 25, fontWeight: "bold", margin: "5px 25px 5px 25px" }}>
                     Willkommen zurück, Ilja!
                 </div>

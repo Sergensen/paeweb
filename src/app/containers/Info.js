@@ -47,7 +47,6 @@ export default class Info extends Component {
         return (
             <Container>
                 <Row>
-                    <Button><Link to={""} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}>Zurück</Link></Button>
                 </Row>
                 <Row>
                     {shop && <FormElement shopId={shopId} save={this.save.bind(this)} shop={shop} />}

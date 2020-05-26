@@ -64,9 +64,6 @@ export default class Info extends Component {
                     {/* <div style={{ left: 0, top: 0, color: "white", fontWeight: "bold", fontSize: 25, margin: 5, position: "absolute" }}>
                             PaeLogo
                         </div> */}
-                    <div style={{ margin: 5, position: "absolute", left: 0, top: 0, }}>
-                        <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
-                    </div>
                     <div style={styles.welcomeTextContainer}>
                         <div style={styles.welcomeText}>Live-Bestellungen</div>
                     </div>

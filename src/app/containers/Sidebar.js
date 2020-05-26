@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 // import { Button, Modal, Card } from 'react-bootstrap';
-import { MdArrowBack, MdShoppingCart, MdStore, MdDashboard } from 'react-icons/md'
-import { FaEdit, FaQrcode } from 'react-icons/fa'
+import { MdArrowBack, MdShoppingCart, MdStore, MdDashboard, MdRepeat } from 'react-icons/md'
+import { FaEdit, FaQrcode, FaSignOutAlt } from 'react-icons/fa'
 import Dashboard from './Dashboard';
+import { auth } from '../Firebase';
+import API from '../Api';
 
 export default class Sidebar extends Component {
-    state = {
+    async signOut() {
+        API.resetShop();
+        API.resetCategory();
+        await auth.signOut()
+        document.location.href = "/login";
+    }
 
+    resetShop() {
+        API.resetShop();
+        API.resetCategory();
+        document.location.href = "/";
     }
 
     render() {
-
+        const store = API.getLocalShop();
         return (
             <div style={styles.container}>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 10}}>
@@ -26,9 +37,10 @@ export default class Sidebar extends Component {
                         <li><FaEdit size={18} color={"rgba(0,0,0,.75)"} style={{marginLeft: 4, marginRight: 10}}/>Speisekarte</li>
                         <li><MdShoppingCart color={"rgba(0,0,0,.75)"} size={19} style={{marginLeft: 2, marginRight: 10}}/>Bestellungen</li>
                         <li><FaQrcode size={18} color={"rgba(0,0,0,.75)"} style={{marginLeft: 4, marginRight: 10}}/>Qr-Codes</li>
+                        {/*Todo nur anzeigen wenn ein Store ausgewählt ist*/}
+                        <li onClick={() => this.resetShop()}><MdRepeat size={18} color={"rgba(0,0,0,.75)"} style={{marginLeft: 4, marginRight: 10}}/>Store wechseln</li>
+                        <li onClick={() => this.signOut()}><FaSignOutAlt size={18} color={"rgba(0,0,0,.75)"} style={{marginLeft: 4, marginRight: 10}}/>Ausloggen</li>
                     </ul>
-
-
                 </div>
             </div>
         )

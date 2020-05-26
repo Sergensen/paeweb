@@ -26,10 +26,10 @@ export default class ShopModal extends Component {
     }
 
     render() {
-        const { toggleModal, modal } = this.props;
+        const { hideModal, modal } = this.props;
         const { user } = this.state;
         return (
-            <Modal show={modal} onHide={() => toggleModal("createShopModal", false)}>  
+            <Modal show={modal} onHide={() => hideModal()}>  
                 <Modal.Header closeButton>
                     <Modal.Title>Shop erstellen</Modal.Title>
                 </Modal.Header>
@@ -58,7 +58,7 @@ export default class ShopModal extends Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button onClick={() => toggleModal(false)} variant="secondary">Abbrechen</Button>
+                    <Button onClick={() => hideModal()} variant="secondary">Abbrechen</Button>
                     <Button onClick={() => this.createShop()} variant="primary">Erstellen</Button>
                 </Modal.Footer>
             </Modal>

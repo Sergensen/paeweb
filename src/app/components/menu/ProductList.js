@@ -49,7 +49,7 @@ export default class ProductList extends Component {
                     return (
                         <Row key={i} style={styles.row}>
                             <Col> {name} </Col>
-                            <Col> {price} </Col>
+                            <Col> {parseFloat(price).toFixed(2)} </Col>
                             <Col> {description} </Col>
                             <Col>
                                 <Button onClick={() => this.toggleModal(i)} style={styles.listButtons}><MdCreate size={20}/></Button>

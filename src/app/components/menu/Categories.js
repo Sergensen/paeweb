@@ -62,7 +62,6 @@ export default class Categories extends Component {
         return (
             <div>
                 <div style={styles.headerContainer}>
-                    <Button style={{ margin: "10px 0 10px 0" }} onClick={() => resetCategory()}><MdArrowBack size={20} />Zurück</Button>
                     <div style={styles.welcomeTextContainer}>
                         <div style={styles.welcomeText}>{name}</div>
                     </div>
@@ -71,6 +70,8 @@ export default class Categories extends Component {
             <Card>
                 <Card.Body>
                 <Container>
+
+                    <Button style={{marginBottom: 15}} variant="outline-warning" onClick={() => resetCategory()}>Kategorie wechseln</Button>
 
                     <div style={{ fontSize: 20, fontWeight: "bold" }}>Beschreibung:</div>
 

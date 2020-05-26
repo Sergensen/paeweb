@@ -20,13 +20,6 @@ export default class Dashboard extends Component {
         shopId: false
     }
 
-    async signOut() {
-        API.resetShop();
-        API.resetCategory();
-        await auth.signOut()
-        document.location.href = "/login";
-    }
-
     componentDidMount() {
         const shopId = API.getLocalShop();
         if (shopId) {
@@ -80,6 +73,10 @@ export default class Dashboard extends Component {
         this.setState({ [type]: value })
     }
 
+    hideModal() {
+        this.setState({createShopModal: false})
+    }
+
     async createShop(shop) {
         const { user } = this.props;
         if (user && shop) {
@@ -97,16 +94,8 @@ export default class Dashboard extends Component {
         return user ? (
             <div style={styles.main}>
                 {/* <div style={styles.headerContainer}>
-                    <div style={{ margin: 5 }}>
-                        <Button disabled={!shopId} onClick={() => this.resetShop()} style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} />Zurück</Button>
-                    </div>
                     <div style={styles.welcomeTextContainer}>
                         <div style={styles.welcomeText}>Guten Tag {user.displayName + "!" || "!"}</div>
-                    </div>
-                    <div style={styles.signOutContainer}>
-                        <Button onClick={() => this.signOut()}>
-                            Ausloggen
-                        </Button>
                     </div>
                 </div> */}
                 {/* <div style={{backgroundColor: "red", height: 100, width: "100%", overflow: "hidden", display: "flex", justifyContent: "center", alignItems: "flex-start"}}>
@@ -123,7 +112,7 @@ export default class Dashboard extends Component {
                             <div style={styles.shopsContainer}>
                                 {(shops.length > 0) && shops.map(({ name, shopId }) => (
 
-                                    <div className="shopContainerHover" style={styles.aShopContainer} onClick={() => this.setShop(shopId)}>
+                                    <div key={Math.random()} className="shopContainerHover" style={styles.aShopContainer} onClick={() => this.setShop(shopId)}>
                                         {/* <Row key={shopId}> */}
                                         <div style={styles.imageContainer}>
                                             <img src={RestaurantLogo} style={styles.image} />
@@ -147,8 +136,8 @@ export default class Dashboard extends Component {
                                         <img src={PlusIcon} style={styles.plusImage} />
                                     </div>
                                     <p style={styles.addNewText}>Neuen Shop erstellen</p>
-                                    <ShopModal createShop={this.createShop.bind(this)} modal={createShopModal} toggleModal={this.toggleModal.bind(this)} />
                                 </div>
+                                <ShopModal createShop={this.createShop.bind(this)} modal={createShopModal} hideModal={this.hideModal.bind(this)} />
                             </div>
                         </Card>
                     )}

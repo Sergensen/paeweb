@@ -101,18 +101,6 @@ export default class Menu extends Component {
         } else if (categories) {
             return (
                 <Card>
-                    <div style={styles.headerContainer}>
-                        <div style={{ margin: 5 }}>
-                            <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
-                        </div>
-                        <div style={{flex: 10}} />
-                        <div style={styles.signOutContainer}>
-                            <Button onClick={() => this.signOut()}>
-                                Ausloggen
-                            </Button>
-                        </div>
-                    </div>
-
                     <div style={styles.menuContainer}>
                         
                         <div style={styles.categoriesContainer}>
@@ -150,19 +138,7 @@ export default class Menu extends Component {
                 </Card>)
         } else {
             return (
-                <Card>
-                    <div style={styles.headerContainer}>
-                        <div style={{ margin: 5 }}>
-                            <Button><Link to="/" style={{ color: "white", flex: 1, justifyContent: "center", alignItems: "center", display: "flex" }}><MdArrowBack size={30} /> Zurück</Link></Button>
-                        </div>
-                        <div style={{flex: 10}} />
-                        <div style={styles.signOutContainer}>
-                            <Button onClick={() => this.signOut()}>
-                                Ausloggen
-                            </Button>
-                        </div>
-                    </div>
-                </Card>
+                <div />
             )
         }
     }

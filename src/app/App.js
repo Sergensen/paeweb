@@ -71,12 +71,10 @@ export default class App extends Component {
                                 <Route path="/orders">
                                     <Orders user={user} />
                                 </Route>
-                                <Route path="/">
+                                <Route exact path="/">
                                     {/* TODO: Wieso zeigt er das immer an?? */}
                                     <Dashboard user={user} />
                                 </Route>
-
-
                             </div>
                     </div>
                     
